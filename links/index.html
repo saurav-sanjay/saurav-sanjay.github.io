@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Saurav Sanjay: Profile
+        </title>
+        <link rel="icon" href="./myPictureDefault.jpg">
+        <link rel="stylesheet" href="forMyProfile.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    </head>
+    <body>
+        <div class="profile">
+            <table>
+                <tr>
+                    <td><a href="#"><img src="myPictureDefault.jpg" alt="profilrPicture" width="175px" height="175px"></a></td>
+                </tr>
+                <tr>
+                    <td><div class="nameBackground"><p>Saurav Sanjay</p></div></td</tr>
+            </table>
+        </div>
+        <div class="textEffect">
+            <p><i class="fab fa-youtube"></i> YouTube:</p>
+            <p><a href="" id="youtubeLink">youtube/SauravSanjay</a></p>
+        </div>
+        <div class="textEffect">
+            <p><i class="fab fa-linkedin"></i> LinkedIn:</p>
+            <p><a href="" id="linkedinLink">linkedin/SauravSanjay</a></p>
+        </div>
+        <div class="textEffect">
+            <p><i class="fab fa-twitter"></i> Twitter:</p>
+            <p><a href="" id="twitterLink">twitter/SauravSanjay</a></p>
+        </div>
+        <div class="textEffect">
+            <p><i class="fab fa-facebook"></i> facebook:</p>
+            <p><a href="" id="facebookLink">facebook/SauravSanjay</a></p>
+        </div>
+        <div class="textEffect">
+            <p><i class="fab fa-instagram"></i> Instagram:</p>
+            <p><a href="" id="instagramLink">instagram/SauravSanjay</a></p>
+        </div>
+        <script>
+            fetch('./myLinks.json').then(response =>{
+                return response.json();
+            })
+            .then(data =>{
+                document.getElementById("youtubeLink").href = data.youtube;
+                document.getElementById("linkedinLink").href = data.linkedin;
+                document.getElementById("twitterLink").href = data.twitter;
+                document.getElementById("facebookLink").href = data.facebook;
+                document.getElementById("instagramLink").href = data.instagram;
+            });
+        </script>
+    </body>
+</html>
