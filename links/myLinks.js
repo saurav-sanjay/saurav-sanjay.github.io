@@ -9,15 +9,19 @@ const platforms = [
     },
     {
         name: "linkedin",
-        url: "https://www.linkedin.com/in/saurav-sanjay-36a3831b1"
+        url: "https://www.linkedin.com/in/sauravsanjay"
     },
     {
         name: "twitter",
-        url: "https://twitter.com/SAURAVSANJAY2"
+        url: "https://twitter.com/saurav_sanjay_"
     },
     {
         name: "youtube",
         url: "https://www.youtube.com/channel/UCHowgTManguhRpisom5Rbrg"
+    },
+    {
+        name: "github",
+        url:"https://github.com/saurav-sanjay/"
     }
 ]
 

@@ -13,8 +13,7 @@
     height: 400px;
     border-radius: 50%;
     border: 10px solid white;
-}
-img{
+    background-size: cover;
 }
 .backgroundForImage{
     background-image: url(defaultPhoto.jpg);
