@@ -2,34 +2,42 @@ const platforms = [
   {
     name: "twitter",
     url: "https://twitter.com/saurav_sanjay_",
+    icon: "twitter",
   },
   {
     name: "facebook",
     url: "https://www.facebook.com/saurav.sanjay.14",
+    icon: "facebook",
   },
   {
     name: "instagram",
     url: "https://www.instagram.com/saurav_sanjay_",
+    icon: "instagram",
   },
   {
     name: "linkedin",
-    url: "https://www.linkedin.com/in/saurav-sanjay-36a3831b1",
+    url: "https://www.linkedin.com/in/sauravsanjay",
+    icon: "linkedin",
   },
   {
     name: "youtube",
-    url: "https://www.youtube.com/channel/UCHowgTManguhRpisom5Rbrg",
+    url: "https://www.youtube.com/@saurav-sanjay",
+    icon: "youtube",
   },
   {
     name: "github",
     url: "https://www.github.com/saurav-sanjay",
+    icon: "github",
   },
   {
     name: "leetcode",
     url: "https://www.leetcode.com/saurav-sanjay",
+    icon: "connectdevelop",
   },
   {
     name: "geeksforgeeks",
     url: "https://auth.geeksforgeeks.org/user/saujay",
+    icon: "connectdevelop",
   },
 ];
 
@@ -49,12 +57,16 @@ platforms.forEach((platform) => {
   cardContainer.innerHTML = createCard(platform);
   rootElement.appendChild(cardContainer.firstChild);
 });
+
 function createCard(platform) {
+  const id = platform.url.split("/").pop() ?? user.name;
+
   return `<div class="textEffect">
-        <p><i class="fab fa-${platform.name}"></i> ${platform.name}:</p>
-        <p><a href="${platform.url}" id="${platform.name}Link">${platform.name}/SauravSanjay</a></p>
+        <p><i class="fab  fa-${platform.icon}"></i> ${platform.name}:</p>
+        <p><a href="${platform.url}" id="${platform.name}Link">${platform.name}/${id}</a></p>
         </div>`;
 }
+
 function createProfile() {
   return `<table>
     <tr>
