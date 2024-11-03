@@ -41,28 +41,34 @@ const platforms = [
   },
 ];
 
-const user = [
-  {
-    name: "Saurav Sanjay",
-    about:
-      "Third year Computer Science and Engineering(CSE) student at SLIET, Longowal, Punjab - 148106",
-    college: "Sant Longowal Institute of Engineering and Technology",
-  },
-];
+/**
+ * This contains basic information about me.
+ */
+const user = {
+  name: "Saurav Sanjay",
+  about:
+    "Third year Computer Science and Engineering(CSE) student at SLIET, Longowal, Punjab - 148106",
+  college: "Sant Longowal Institute of Engineering and Technology",
+};
 
 const rootElement = document.getElementById("root");
+
+const redirections = document.createElement("div");
+redirections.classList.add("collections");
 
 platforms.forEach((platform) => {
   const cardContainer = document.createElement("div");
   cardContainer.innerHTML = createCard(platform);
-  rootElement.appendChild(cardContainer.firstChild);
+  redirections.appendChild(cardContainer);
 });
+
+rootElement.appendChild(redirections);
 
 function createCard(platform) {
   const id = platform.url.split("/").pop() ?? user.name;
 
   return `<div class="textEffect">
-        <p><i class="fab  fa-${platform.icon}"></i> ${platform.name}:</p>
+        <p><i class="fab  fa-${platform.icon}"></i> ${platform.name}</p>
         <p><a href="${platform.url}" id="${platform.name}Link">${platform.name}/${id}</a></p>
         </div>`;
 }
@@ -70,7 +76,7 @@ function createCard(platform) {
 function createProfile() {
   return `<table>
     <tr>
-        <td><a href="./myProfile.html"><img src="myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></a></td>
+        <td><a href="./profile"><img src="/assets/images/myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></a></td>
     </tr>
     <tr>
         <td><div class="nameBackground"><p class="inout">${user.name} <br />Third year Computer Science and Engineering(CSE) student at <a href="http://sliet.ac.in"><abbr title="Sant Longowal Institute of Engineering and Technology"><strong>SLIET</strong></abbr></a>, Longowal, Punjab - 148106</p></div></td>
