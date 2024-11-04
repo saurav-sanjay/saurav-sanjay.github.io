@@ -35,10 +35,11 @@ table {
   align-items: center;
   justify-content: center;
   text-shadow: black;
-  font-size: 35px;
+  font-size: var(--font-size-md);
   padding: var(--spacing-md);
   margin: auto;
   margin-bottom: 2.5%;
+  overflow: hidden;
 }
 
 .textEffect p {
@@ -54,7 +55,7 @@ table {
 .textEffect a {
   text-decoration: none;
   color: white;
-  font-size: 30px;
+  font-size: var(--font-size-md);
   background: black;
   padding: 10px 16px 10px 16px;
   border-radius: 50px;
