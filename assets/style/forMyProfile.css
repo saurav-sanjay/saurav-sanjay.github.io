@@ -1,9 +1,11 @@
 @import url("variables.css");
+@import url("utils.css");
 
 body {
   background-image: linear-gradient(to right, #434343 0%, black 100%);
   margin: var(--horizontal-spacing);
 }
+
 .profile img {
   border-radius: 50%;
   display: block;
@@ -11,14 +13,17 @@ body {
   margin-right: auto;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .profile p {
   text-align: center;
   font-size: 24px;
 }
+
 table {
   width: 100%;
   margin: auto;
 }
+
 .nameBackground p {
   color: white;
   border-radius: 25px;
@@ -60,16 +65,19 @@ table {
   padding: 10px 16px 10px 16px;
   border-radius: 50px;
 }
+
 .textEffect a:hover {
   background: white;
   color: black;
   box-shadow: var(--shadow-md);
 }
+
 .inout a,
 abbr {
   color: white;
   text-decoration: none;
 }
+
 .credit {
   text-align: center;
   font-size: 25px;

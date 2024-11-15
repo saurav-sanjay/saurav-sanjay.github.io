@@ -1,5 +1,6 @@
 :root {
   --horizontal-spacing: 16px;
+  --app-background: linear-gradient(to right, #434343 0%, black 100%);
   --card-background: linear-gradient(
     to left bottom,
     rgba(255, 255, 255, 0.8),

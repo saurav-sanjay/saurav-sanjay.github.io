@@ -1,0 +1,5 @@
+@import url("variables.css");
+
+.color-app-background {
+  background: var(--app-background);
+}
