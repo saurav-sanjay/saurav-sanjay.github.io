@@ -1,4 +1,6 @@
 :root {
+  /* App level */
+
   --horizontal-spacing: 16px;
   --app-background: linear-gradient(to right, #434343 0%, black 100%);
   --card-background: linear-gradient(
@@ -7,16 +9,50 @@
     rgba(255, 255, 255, 0.4),
     rgba(255, 255, 255, 0.1)
   );
+
+  /* Specifics */
+
+  --profile-photo-width: 125px;
+  --profile-photo-height: 125px;
+
+  /* Commons */
+  
+  --white: #ffffff;
+  --black: #000000;
+
+  --radius-lg: 24px
+
   --shadow-md: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
   --spacing-xs: 8px;
   --spacing-sm: 12px;
   --spacing-md: 16px;
 
-  --font-size-md: 16px;
+  --font-size-sm: 16px;
+  --font-size-md: 24px;
+  --font-size-lg: 36px;
 }
 
+/* Desktop */
 @media (min-width: 600px) {
   :root {
+    /* App level */
+
+    --horizontal-spacing: 24px;
+
+    /* Specifics */
+
+    --profile-photo-width: 200px;
+    --profile-photo-height: 200px;
+
+    /* Commons */
+
+    --spacing-xs: 12px;
+    --spacing-sm: 18px;
+    --spacing-md: 24px;
+
+    --font-size-sm: 24px;
     --font-size-md: 36px;
+    --font-size-lg: 48px;
   }
 }

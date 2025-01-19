@@ -1,37 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Cards</title>
+    <link rel="stylesheet" href="/assets/style/forMyProfile.css" />
+    <link rel="stylesheet" href="/assets/style/forMyProfileStat.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Social Cards</title>
-  <link rel="stylesheet" href="/assets/style/forMyProfile.css">
-  <link rel="stylesheet" href="/assets/style/forMyProfileStat.css">
-</head>
+  <body class="color-app-background">
+    <div id="root"></div>
+    <div class="widget-container">
+      <!-- Add more cards here -->
+      <bsky-widget
+        data-handle="saujay.bsky.social"
+        class="widget"
+      ></bsky-widget>
+    </div>
+  </body>
 
-<body class="color-app-background">
-  <div id="root"></div>
-  <div class="widget-container">
-    <bsky-widget data-handle="saujay.bsky.social" class="widget"></bsky-widget>
-  </div>
-  </bsky-widget>
-</body>
+  <script>
+    const getContent = async () => {
+      try {
+        const response = await fetch("../profile.html");
+        const content = await response.text();
 
-<script>
-  const getContent = async () => {
-    try {
-      const response = await fetch("/profile.html");
-      const content = await response.text();
-      document.getElementById("root").innerHTML = content;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+        const profileDoc = new DOMParser().parseFromString(
+          content,
+          "text/html"
+        );
 
-  getContent();
-</script>
+        profileDoc.getElementById("profile_coming-soon_title").style.display =
+          "none";
 
-<script src="https://unpkg.com/bsky-widget@~0.0/dist/index.js" type="module">
-</script>
+        document.getElementById("root").innerHTML = profileDoc.body.innerHTML;
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
+    getContent();
+  </script>
+
+  <script
+    src="https://unpkg.com/bsky-widget@~0.0/dist/index.js"
+    type="module"
+  ></script>
 </html>

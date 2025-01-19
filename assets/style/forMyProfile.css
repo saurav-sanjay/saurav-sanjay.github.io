@@ -1,32 +1,39 @@
 @import url("variables.css");
-@import url("utils.css");
 
 body {
   background-image: linear-gradient(to right, #434343 0%, black 100%);
   margin: var(--horizontal-spacing);
 }
 
-.profile img {
-  border-radius: 50%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.profile p {
-  text-align: center;
-  font-size: 24px;
-}
-
+/* About */
 table {
   width: 100%;
   margin: auto;
 }
 
+.profile img {
+  border-radius: 50%;
+  width: var(--profile-photo-width);
+  height: var(--profile-photo-height);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: var(--shadow-md);
+}
+
+.profile p {
+  text-align: center;
+  font-size: var(--font-size-md);
+}
+
 .nameBackground p {
-  color: white;
-  border-radius: 25px;
+  color: var(--white);
+}
+
+/* Cards */
+
+.collections {
+  gap: var(--spacing-sm);
 }
 
 /* Redirection Cards */
@@ -39,7 +46,7 @@ table {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-shadow: black;
+  text-shadow: var(--black);
   font-size: var(--font-size-md);
   padding: var(--spacing-md);
   margin: auto;
@@ -51,6 +58,7 @@ table {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: var(--font-size-md);
 }
 
 .textEffect p i {
@@ -59,22 +67,22 @@ table {
 
 .textEffect a {
   text-decoration: none;
-  color: white;
+  color: var(--white);
   font-size: var(--font-size-md);
-  background: black;
+  background: var(--black);
   padding: 10px 16px 10px 16px;
   border-radius: 50px;
 }
 
 .textEffect a:hover {
-  background: white;
-  color: black;
+  background: var(--white);
+  color: var(--black);
   box-shadow: var(--shadow-md);
 }
 
 .inout a,
 abbr {
-  color: white;
+  color: var(--white);
   text-decoration: none;
 }
 
@@ -87,12 +95,15 @@ abbr {
 
 /* Desktop */
 @media (min-width: 601px) {
+  /* About */
+
   .profile p {
-    font-size: 50px;
+    font-size: var(--font-size-lg);
   }
 
   .collections {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
+    overflow-x: scroll;
   }
 }
