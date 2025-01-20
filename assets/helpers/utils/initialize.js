@@ -9,6 +9,9 @@ const SITE_CONFIGURATIONS = {
     "projects",
     "software developer",
     "links",
+    "movies genres",
+    "movies",
+    "genres",
   ],
 };
 
@@ -43,8 +46,8 @@ const setSiteConfigs = () => {
   description.setAttribute("content", STRINGS.SITE.DESCRIPTION);
 
   const keywords = document.createElement("meta");
-  keywords.setAttribute("property", "description");
-  keywords.setAttribute("content", SITE_CONFIGURATIONS.KEYWORDS);
+  keywords.setAttribute("property", "keywords");
+  keywords.setAttribute("content", SITE_CONFIGURATIONS.KEYWORDS.join(", "));
 
   document.head.appendChild(author);
   document.head.appendChild(description);

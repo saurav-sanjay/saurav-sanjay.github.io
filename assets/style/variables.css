@@ -16,11 +16,12 @@
   --profile-photo-height: 125px;
 
   /* Commons */
-  
+  --commons-card-width: 100%;
+
   --white: #ffffff;
   --black: #000000;
 
-  --radius-lg: 24px
+  --radius-lg: 24px;
 
   --shadow-md: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
@@ -46,6 +47,8 @@
     --profile-photo-height: 200px;
 
     /* Commons */
+
+    --commons-card-width: 90%;
 
     --spacing-xs: 12px;
     --spacing-sm: 18px;
