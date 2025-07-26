@@ -3,49 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
+    <title>Profile | Saurav Sanjay</title>
     <link rel="stylesheet" href="/assets/style/forMyProfile.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
     <script type="module" src="/assets/helpers/utils/initialize.js"></script>
+    <script>
+      const searchParams = new URLSearchParams(window.location.search);
+      const isDebugEnabled = searchParams.has("debug");
+      window._IS_DEBUG_ENABLED = isDebugEnabled;
+      if (isDebugEnabled) {
+        console.log("[index.html]: Enabled debug mode...", isDebugEnabled);
+      }
+    </script>
   </head>
 
   <body id="root">
-    <div include-html="profile.html"></div>
-    <div class="profile">
-      <table>
-        <tr>
-          <td>
-            <a href="/socials"
-              ><img
-                src="./assets/images/defaultPhoto.jpg"
-                alt="profilePicture"
-                width="175px"
-                height="175px"
-                style="object-fit: cover"
-            /></a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="nameBackground">
-              <p class="inout">
-                Saurav Sanjay <br />Final year Computer Science and
-                Engineering(CSE) student at
-                <a href="http://sliet.ac.in"
-                  ><abbr
-                    title="Sant Longowal Institute of Engineering and Technology"
-                    ><strong>SLIET</strong></abbr
-                  ></a
-                >, Longowal, Punjab - 148106
-              </p>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
     <script src="./assets/data/myLinks.js"></script>
     <script type="module" src="./utils/index.js"></script>
   </body>

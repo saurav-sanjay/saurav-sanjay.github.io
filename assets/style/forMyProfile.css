@@ -93,6 +93,20 @@ abbr {
   padding: 5px;
 }
 
+/* Profile -> Projects */
+
+.projects {
+  li {
+    list-style: none;
+  }
+
+  li a {
+    color: var(--white);
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+  }
+}
+
 /* Desktop */
 @media (min-width: 601px) {
   /* About */

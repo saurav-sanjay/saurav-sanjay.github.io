@@ -13,11 +13,11 @@ const platforms = [
   },
   {
     name: "linkedin",
-    url: "https://www.linkedin.com/in/saurav-sanjay-36a3831b1",
+    url: "https://www.linkedin.com/in/sauravsanjay",
   },
   {
     name: "youtube",
-    url: "https://www.youtube.com/channel/UCHowgTManguhRpisom5Rbrg",
+    url: "https://www.youtube.com/@saurav-sanjay",
   },
   {
     name: "github",
@@ -33,16 +33,18 @@ const platforms = [
   },
 ];
 
-const user = [
-  {
-    name: "Saurav Sanjay",
-    about:
-      "Third year Computer Science and Engineering(CSE) student at SLIET, Longowal, Punjab - 148106",
-    college: "Sant Longowal Institute of Engineering and Technology",
-  },
-];
+const myDetails = {
+  name: "Saurav Sanjay",
+  about: "Software Engineer",
+  college: "Sant Longowal Institute of Engineering and Technology",
+};
 
 const rootElement = document.getElementById("root");
+
+const profileContainer = document.createElement("div");
+profileContainer.classList.add("profile");
+profileContainer.innerHTML = createProfile();
+rootElement.appendChild(profileContainer);
 
 platforms.forEach((platform) => {
   const cardContainer = document.createElement("div");
@@ -58,10 +60,10 @@ function createCard(platform) {
 function createProfile() {
   return `<table>
     <tr>
-        <td><a href="./myProfile.html"><img src="myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></a></td>
+        <td><img src="myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></td>
     </tr>
     <tr>
-        <td><div class="nameBackground"><p class="inout">${user.name} <br />Third year Computer Science and Engineering(CSE) student at <a href="http://sliet.ac.in"><abbr title="Sant Longowal Institute of Engineering and Technology"><strong>SLIET</strong></abbr></a>, Longowal, Punjab - 148106</p></div></td>
+        <td><div class="nameBackground"><p class="inout">${myDetails.name} | ${myDetails.about}</p></div></td>
     </tr>
     </table>`;
 }
