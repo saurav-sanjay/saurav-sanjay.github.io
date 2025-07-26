@@ -13,7 +13,7 @@
     <script>
       const searchParams = new URLSearchParams(window.location.search);
       const isDebugEnabled = searchParams.has("debug");
-      window._IS_DEBUG_ENABLED = isDebugEnabled;
+      window.__IS__DEBUG__ENABLED = isDebugEnabled;
       if (isDebugEnabled) {
         console.log("[index.html]: Enabled debug mode...", isDebugEnabled);
       }

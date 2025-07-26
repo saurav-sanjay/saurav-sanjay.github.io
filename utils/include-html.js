@@ -1,5 +1,5 @@
 function includeHtml() {
-  const isDebugEnabled = window._IS_DEBUG_ENABLED;
+  const isDebugEnabled = window.__IS__DEBUG__ENABLED;
   if (isDebugEnabled) {
     console.log("[utils/include.html]: Loading...");
   }

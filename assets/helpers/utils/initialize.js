@@ -29,24 +29,31 @@ const PATH = {
   MY_IMAGE: "/assets/images/myPictureDefault.jpg",
 };
 
-const setFavicon = () => {
+const setFavicon = (isDebugEnabled) => {
+  if (isDebugEnabled) {
+    console.log("[helpers/utils/initialize.js]: Setting... favicon");
+  }
   const link = document.createElement("link");
   link.rel = "icon";
   link.href = PATH.DEFAULT_SITE_FAVICON;
   document.head.appendChild(link);
 };
 
-const setSiteConfigs = () => {
+const setSiteConfigs = (isDebugEnabled) => {
+  if (isDebugEnabled) {
+    console.log("[helpers/utils/initialize.js]: Setting... details");
+  }
+
   const author = document.createElement("meta");
-  author.setAttribute("property", "author");
+  author.setAttribute("name", "author");
   author.setAttribute("content", SITE_CONFIGURATIONS.AUTHOR);
 
   const description = document.createElement("meta");
-  description.setAttribute("property", "description");
+  description.setAttribute("name", "description");
   description.setAttribute("content", STRINGS.SITE.DESCRIPTION);
 
   const keywords = document.createElement("meta");
-  keywords.setAttribute("property", "keywords");
+  keywords.setAttribute("name", "keywords");
   keywords.setAttribute("content", SITE_CONFIGURATIONS.KEYWORDS.join(", "));
 
   document.head.appendChild(author);
@@ -54,7 +61,11 @@ const setSiteConfigs = () => {
   document.head.appendChild(keywords);
 };
 
-const setOGMetaData = () => {
+const setOGMetaData = (isDebugEnabled) => {
+  if (isDebugEnabled) {
+    console.log("[helpers/utils/initialize.js]: Setting... og");
+  }
+
   const ogTitle = document.createElement("meta");
   ogTitle.setAttribute("property", "og:title");
   ogTitle.setAttribute("content", STRINGS.SITE.TITLE);
@@ -83,9 +94,15 @@ const setOGMetaData = () => {
 };
 
 const init = () => {
-  setFavicon();
-  setSiteConfigs();
-  setOGMetaData();
+  const isDebugEnabled = window.__IS__DEBUG__ENABLED;
+
+  if (isDebugEnabled) {
+    console.log("[helpers/utils/initialize.js]: Initializing...");
+  }
+
+  setFavicon(isDebugEnabled);
+  setSiteConfigs(isDebugEnabled);
+  setOGMetaData(isDebugEnabled);
 };
 
 init();
