@@ -53,17 +53,22 @@ function capitalize(str) {
 /**
  * This contains basic information about me.
  */
-const user = {
+const myDetails = {
   name: "Saurav Sanjay",
-  about:
-    "Third year Computer Science and Engineering(CSE) student at SLIET, Longowal, Punjab - 148106",
+  about: "Software Engineer",
   college: "Sant Longowal Institute of Engineering and Technology",
 };
 
 const rootElement = document.getElementById("root");
 
+const profileContainer = document.createElement("div");
+profileContainer.classList.add("profile");
+profileContainer.innerHTML = createProfile();
+
 const collections = document.createElement("div");
 collections.classList.add("collections");
+
+rootElement.appendChild(profileContainer);
 
 platforms.forEach((platform) => {
   const cardContainer = document.createElement("div");
@@ -87,10 +92,10 @@ function createCard(platform) {
 function createProfile() {
   return `<table>
     <tr>
-        <td><a href="./profile"><img src="/assets/images/myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></a></td>
+        <td><a href="./socials"><img src="/assets/images/defaultPhoto.jpg" alt="profilePicture" width="175px" height="175px" style="object-fit: cover"></a></td>
     </tr>
     <tr>
-        <td><div class="nameBackground"><p class="inout">${user.name} <br />Third year Computer Science and Engineering(CSE) student at <a href="http://sliet.ac.in"><abbr title="Sant Longowal Institute of Engineering and Technology"><strong>SLIET</strong></abbr></a>, Longowal, Punjab - 148106</p></div></td>
+        <td><div class="nameBackground"><p class="inout">${myDetails.name} | ${myDetails.about}</p></div></td>
     </tr>
     </table>`;
 }
