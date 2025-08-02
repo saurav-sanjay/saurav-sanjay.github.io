@@ -27,7 +27,7 @@ const platforms = [
   {
     name: "bluesky",
     url: "https://bsky.app/profile/saujay.bsky.social",
-    icon: "fa-brands fa-bluesky",
+    icon: "fab fa-react",
   },
   {
     name: "youtube",
