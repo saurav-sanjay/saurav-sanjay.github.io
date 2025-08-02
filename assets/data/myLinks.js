@@ -25,6 +25,11 @@ const platforms = [
     icon: "fab  fa-linkedin",
   },
   {
+    name: "bluesky",
+    url: "https://bsky.app/profile/saujay.bsky.social",
+    icon: "fab fa-bluesky",
+  },
+  {
     name: "youtube",
     url: "https://www.youtube.com/@saurav-sanjay",
     icon: "fab  fa-youtube",
