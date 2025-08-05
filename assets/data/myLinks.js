@@ -52,7 +52,7 @@ const platforms = [
   {
     name: "codechef",
     url: "https://www.codechef.com/users/saurav_sanjay",
-    icon: "terminal",
+    icon: "fas fa-terminal",
   },
 ];
 
