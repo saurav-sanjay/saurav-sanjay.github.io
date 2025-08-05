@@ -49,6 +49,11 @@ const platforms = [
     url: "https://auth.geeksforgeeks.org/user/saujay",
     icon: "fas fa-book",
   },
+  {
+    name: "codechef",
+    url: "https://www.codechef.com/users/saurav_sanjay",
+    icon: "terminal",
+  },
 ];
 
 function capitalize(str) {
