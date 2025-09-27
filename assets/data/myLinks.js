@@ -26,7 +26,7 @@ const platforms = [
   },
   {
     name: "bluesky",
-    url: "https://bsky.app/profile/saujay.bsky.social",
+    url: "https://bsky.app/profile/saurav-sanjay.github.io",
     icon: "fab fa-react",
   },
   {
