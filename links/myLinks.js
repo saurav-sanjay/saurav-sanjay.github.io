@@ -35,7 +35,7 @@ const platforms = [
 
 const myDetails = {
   name: "Saurav Sanjay",
-  about: "Software Engineer",
+  about: "Associate Software Engineer",
   college: "Sant Longowal Institute of Engineering and Technology",
 };
 
@@ -63,7 +63,7 @@ function createProfile() {
         <td><img src="myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></td>
     </tr>
     <tr>
-        <td><div class="nameBackground"><p class="inout">${myDetails.name} | ${myDetails.about}</p></div></td>
+        <td><div class="nameBackground"><p class="inout">${myDetails.name}<br/>${myDetails.about}<br/>${myDetails.college}</p></div></td>
     </tr>
     </table>`;
 }

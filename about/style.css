@@ -1,0 +1,208 @@
+@import url("../assets/style/variables.css");
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--app-background);
+}
+
+.profile {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Timeline */
+.timeline-container {
+  max-width: 800px;
+  width: 100%; /* Ensure it takes width */
+  padding: 20px;
+}
+
+.section-title {
+  text-align: center;
+  color: var(--white);
+  font-size: var(--font-size-lg);
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 30px; /* Space for the line */
+}
+
+/* Vertical Line */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -35px; /* Adjust to center on line: -30px (padding) - 5px (half dot width) + 1px (half line width) approx */
+  top: 0;
+  width: 12px;
+  height: 12px;
+  background-color: var(--white);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Reuse existing textEffect but modify for timeline content */
+.timeline-content.textEffect {
+  margin: 0;
+  align-items: flex-start; /* Align text to left */
+  text-align: left;
+  width: 100%;
+  max-width: 100%; /* Override max-width from textEffect */
+  box-sizing: border-box;
+}
+
+.timeline-content h3 {
+  margin: 0 0 5px 0;
+  font-size: var(--font-size-md);
+  color: var(--white);
+}
+
+.timeline-content h4 {
+  margin: 0 0 10px 0;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: normal;
+}
+
+.timeline-content .date {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Gap for icon */
+}
+
+.timeline-content .date i {
+  margin-right: 0; /* Override existing margin */
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Apply Animations */
+.timeline-item {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.timeline-dot {
+  transform: scale(0);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Staggered Delays */
+.timeline-item:nth-child(1),
+.timeline-item:nth-child(1) .timeline-dot {
+  animation-delay: 0.1s;
+}
+
+.timeline-item:nth-child(2),
+.timeline-item:nth-child(2) .timeline-dot {
+  animation-delay: 0.3s;
+}
+
+.timeline-item:nth-child(3),
+.timeline-item:nth-child(3) .timeline-dot {
+  animation-delay: 0.5s;
+}
+
+/* Hover Effects */
+.timeline-content.textEffect {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-content.textEffect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-item:hover .timeline-dot {
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+  background-color: var(--white);
+}
+
+/* Mobile Responsiveness for Timeline */
+@media (max-width: 600px) {
+  .timeline-container {
+    padding: 10px;
+    margin: 8px;
+  }
+
+  .timeline {
+    padding-left: 15px; /* Reduced padding */
+  }
+
+  .timeline-dot {
+    left: -21px; /* -15px (padding) - 6px (half dot) */
+    top: 16px; /* Align with center of first line (padding 12px + ~half line height) */
+  }
+
+  /* Smaller typography for mobile */
+  .timeline-content h3 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .timeline-content h4 {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .timeline-content .date {
+    font-size: 12px;
+  }
+
+  .timeline-content.textEffect {
+    padding: 12px; /* Reduce padding inside card */
+    border-radius: 16px; /* Smaller radius for mobile */
+  }
+}

@@ -65,11 +65,17 @@ function capitalize(str) {
  */
 const myDetails = {
   name: "Saurav Sanjay",
-  about: "Software Engineer",
+  about: "Associate Software Engineer",
   college: "Sant Longowal Institute of Engineering and Technology",
 };
 
 const rootElement = document.getElementById("root");
+
+const aboutButton = document.createElement("a");
+aboutButton.href = "/about";
+aboutButton.innerHTML = 'About <i class="fas fa-external-link-alt"></i>';
+aboutButton.classList.add("about-chip");
+rootElement.appendChild(aboutButton);
 
 const profileContainer = document.createElement("div");
 profileContainer.classList.add("profile");
@@ -105,7 +111,7 @@ function createProfile() {
         <td><a href="./socials"><img src="/assets/images/defaultPhoto.jpg" alt="profilePicture" width="175px" height="175px" style="object-fit: cover"></a></td>
     </tr>
     <tr>
-        <td><div class="nameBackground"><p class="inout">${myDetails.name} | ${myDetails.about}</p></div></td>
+        <td><div class="nameBackground"><p class="inout">${myDetails.name}<br/>${myDetails.about}</p></div></td>
     </tr>
     </table>`;
 }
