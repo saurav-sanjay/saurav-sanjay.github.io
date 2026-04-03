@@ -23,7 +23,7 @@
   <script>
     const getContent = async () => {
       try {
-        const response = await fetch("../profile.html");
+        const response = await fetch("../profile-widget.html");
         const content = await response.text();
 
         const profileDoc = new DOMParser().parseFromString(
@@ -31,8 +31,10 @@
           "text/html"
         );
 
-        profileDoc.getElementById("profile_projects_list").style.display =
-          "none";
+        const projectsList = profileDoc.getElementById("profile_projects_list");
+        if (projectsList) {
+          projectsList.style.display = "none";
+        }
 
         document.getElementById("root").innerHTML = profileDoc.body.innerHTML;
       } catch (error) {

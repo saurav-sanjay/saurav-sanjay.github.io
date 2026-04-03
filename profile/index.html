@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profile</title>
-    <script type="module" src="/assets/helpers/utils/initialize.js"></script>
+    <title>Redirecting…</title>
+    <script>
+      location.replace("/projects/");
+    </script>
+    <meta http-equiv="refresh" content="0; url=/projects/" />
   </head>
   <body>
-    <script>
-      window.location.pathname = "/profile.html";
-    </script>
+    <p><a href="/projects/">Continue to Projects</a></p>
   </body>
 </html>

@@ -1,7 +1,7 @@
 const platforms = [
   {
     name: "projects",
-    url: "/profile",
+    url: "/projects",
     icon: "fas fa-tasks",
   },
   {

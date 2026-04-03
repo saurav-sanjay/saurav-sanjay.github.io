@@ -1,0 +1,278 @@
+@import url("variables.css");
+
+/* Projects route: /projects/ — hero photo + gradient into glass panel */
+.projects-page__main {
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: var(--spacing-md);
+}
+
+.projects-page__header {
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+.projects-page__hero {
+  position: relative;
+  width: 100%;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.projects-page__hero-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 140px;
+  max-height: 320px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.projects-page__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Smooth blend: photo → dark scrim → hand-off to glass panel */
+.projects-page__hero-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.12) 28%,
+    rgba(0, 0, 0, 0.38) 52%,
+    rgba(0, 0, 0, 0.62) 72%,
+    rgba(0, 0, 0, 0.82) 88%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
+}
+
+/* Glass card: overlaps image so gradient reads as one continuous transition */
+.projects-page__hero-panel.textEffect {
+  position: relative;
+  z-index: 1;
+  width: calc(100% - 2 * var(--spacing-md));
+  max-width: calc(100% - 2 * var(--spacing-md));
+  margin: -3.25rem auto var(--spacing-sm);
+  padding: var(--spacing-md);
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+  background: var(--card-background);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: var(--shadow-md);
+}
+
+.projects-page__title {
+  margin: 0 0 var(--spacing-sm);
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--white);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  line-height: 1.2;
+}
+
+.projects-page__hero-panel.textEffect p.projects-page__intro {
+  margin: 0;
+  display: block;
+  max-width: 42em;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.55;
+  text-shadow: var(--black);
+}
+
+/* Container mounted at #profile_projects_list */
+.projects {
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+}
+
+.projects__grid {
+  display: grid;
+  gap: var(--spacing-md);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 601px) {
+  .projects__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.projects__empty {
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  font-size: var(--font-size-sm);
+}
+
+/* Card: extends .textEffect from forMyProfile.css */
+.project-card.textEffect {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  align-items: stretch;
+  text-align: left;
+  padding: 0;
+  overflow: hidden;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card.textEffect:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.project-card__media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.project-card .project-card__preview {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: cover;
+  display: block;
+}
+
+.project-card__body {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  flex: 1;
+}
+
+.project-card__title {
+  margin: 0;
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+.project-card.textEffect p.project-card__period {
+  margin: 0;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.55);
+  gap: 8px;
+}
+
+.project-card.textEffect p.project-card__period i {
+  margin-right: 0;
+}
+
+.project-card.textEffect p.project-card__description {
+  margin: 0;
+  display: block;
+  text-align: left;
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.45;
+  flex: 1;
+}
+
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.project-card.textEffect a.project-card__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--white);
+  font-size: var(--font-size-sm);
+  background: var(--black);
+  padding: 10px 16px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.project-card.textEffect a.project-card__btn:hover {
+  background: var(--white);
+  color: var(--black);
+  box-shadow: var(--shadow-md);
+}
+
+.project-card.textEffect a.project-card__btn i {
+  margin-right: 0;
+}
+
+.project-card.textEffect a.project-card__btn--secondary {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.project-card.textEffect a.project-card__btn--secondary:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+@media (max-width: 600px) {
+  .projects-page__hero-media {
+    aspect-ratio: 16 / 9;
+    min-height: 120px;
+    max-height: 220px;
+  }
+
+  .projects-page__hero-panel.textEffect {
+    width: calc(100% - 2 * var(--spacing-sm));
+    max-width: calc(100% - 2 * var(--spacing-sm));
+    margin: -2.5rem auto var(--spacing-xs);
+    padding: var(--spacing-sm);
+  }
+
+  .projects-page__title {
+    font-size: var(--font-size-md);
+  }
+
+  .projects-page__hero-panel.textEffect p.projects-page__intro {
+    font-size: 14px;
+    padding-left: var(--spacing-xs);
+    padding-right: var(--spacing-xs);
+  }
+
+  .project-card__title {
+    font-size: 16px;
+  }
+
+  .project-card.textEffect p.project-card__description,
+  .project-card.textEffect p.project-card__period,
+  .project-card.textEffect a.project-card__btn {
+    font-size: 14px;
+  }
+
+  .project-card__body {
+    padding: var(--spacing-sm);
+  }
+}

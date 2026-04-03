@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | Saurav Sanjay</title>
+    <link rel="stylesheet" href="/assets/style/forMyProfile.css" />
+    <link rel="stylesheet" href="/assets/style/projects.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+    <script type="module" src="/assets/helpers/utils/initialize.js"></script>
+  </head>
+
+  <body class="projects-page">
+    <main class="projects-page__main">
+      <div id="projects_page_header"></div>
+      <div id="profile_projects_list" class="projects"></div>
+    </main>
+    <script type="module">
+      import { mountProjectsPage } from "/assets/js/renderProjects.js";
+      mountProjectsPage();
+    </script>
+  </body>
+</html>
