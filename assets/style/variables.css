@@ -20,10 +20,21 @@
 
   --white: #ffffff;
   --black: #000000;
+  --text-muted: rgba(255, 255, 255, 0.74);
+  --sheet-backdrop: rgba(12, 12, 12, 0.24);
+  --sheet-surface: linear-gradient(
+    180deg,
+    rgba(34, 34, 34, 0.98) 0%,
+    rgba(14, 14, 14, 0.98) 100%
+  );
+  --sheet-border: rgba(255, 255, 255, 0.14);
+  --sheet-icon-surface: rgba(255, 255, 255, 0.1);
 
   --radius-lg: 24px;
+  --radius-xl: 32px;
 
   --shadow-md: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  --shadow-lg: 0 18px 48px rgba(0, 0, 0, 0.42);
 
   --spacing-xs: 8px;
   --spacing-sm: 12px;
