@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html data-page="home">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- PAGE_METADATA:START -->
     <title>Profile | Saurav Sanjay</title>
+    <meta name="description" content="Personal website of Saurav Sanjay with profile details, links, and featured work." />
+    <meta name="author" content="Saurav Sanjay" />
+    <meta name="keywords" content="Saurav Sanjay, portfolio, software engineer, web developer, projects, personal website" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <link rel="canonical" href="https://saurav-sanjay.github.io/" />
+    <link rel="icon" href="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" type="image/jpeg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saurav Sanjay" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Profile | Saurav Sanjay" />
+    <meta property="og:description" content="Personal website of Saurav Sanjay with profile details, links, and featured work." />
+    <meta property="og:url" content="https://saurav-sanjay.github.io/" />
+    <meta property="og:image" content="https://saurav-sanjay.github.io/assets/images/myPictureDefault.jpg" />
+    <meta property="og:image:alt" content="Portrait of Saurav Sanjay" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Profile | Saurav Sanjay" />
+    <meta name="twitter:description" content="Personal website of Saurav Sanjay with profile details, links, and featured work." />
+    <meta name="twitter:image" content="https://saurav-sanjay.github.io/assets/images/myPictureDefault.jpg" />
+    <!-- PAGE_METADATA:END -->
     <script>
       const storedTheme = window.localStorage.getItem("preferred-theme");
       if (storedTheme === "light") {
@@ -15,7 +36,6 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
-    <script type="module" src="/assets/helpers/utils/initialize.js"></script>
     <script>
       const searchParams = new URLSearchParams(window.location.search);
       const isDebugEnabled = searchParams.has("debug");

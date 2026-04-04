@@ -1,5 +1,20 @@
 # saurav-sanjay.github.io
 
+## Metadata
+
+Page metadata is centralized in `assets/helpers/utils/page-metadata.mjs`.
+Each full page keeps its metadata inside a generated `PAGE_METADATA` block in
+the `<head>`.
+
+After changing the shared metadata config, run:
+
+```bash
+node scripts/sync-page-metadata.mjs
+```
+
+That script rewrites the canonical, Open Graph, Twitter, and basic SEO tags
+for every registered page.
+
 - [Movies Genres](https://movies-genres.netlify.app/)
 - [ConnectWM - Connect With Me](https://connectwm.netlify.app/)
 - [Endeavour Portfolio Site](https://resourcesatresource.github.io/endeavour/)
