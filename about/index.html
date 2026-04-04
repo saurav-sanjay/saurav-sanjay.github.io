@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About | Saurav Sanjay</title>
+    <script>
+      const storedTheme = window.localStorage.getItem("preferred-theme");
+      if (storedTheme === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    </script>
     <link rel="stylesheet" href="/assets/style/forMyProfile.css" />
     <link
       rel="stylesheet"

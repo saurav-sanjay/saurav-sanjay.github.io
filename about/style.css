@@ -33,7 +33,7 @@ body {
 
 .section-title {
   text-align: center;
-  color: var(--white);
+  color: var(--text-primary);
   font-size: var(--font-size-lg);
   margin-bottom: 30px;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -57,18 +57,21 @@ body {
 
 .timeline-item {
   position: relative;
+  display: flex;
+  align-items: center;
   margin-bottom: 40px;
 }
 
 .timeline-dot {
   position: absolute;
   left: -35px; /* Adjust to center on line: -30px (padding) - 5px (half dot width) + 1px (half line width) approx */
-  top: 0;
+  top: 50%;
   width: 12px;
   height: 12px;
   background-color: var(--white);
   border-radius: 50%;
   box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+  transform: translateY(-50%);
 }
 
 /* Reuse existing textEffect but modify for timeline content */
@@ -84,20 +87,20 @@ body {
 .timeline-content h3 {
   margin: 0 0 5px 0;
   font-size: var(--font-size-md);
-  color: var(--white);
+  color: var(--timeline-title-color);
 }
 
 .timeline-content h4 {
   margin: 0 0 10px 0;
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--timeline-subtitle-color);
   font-weight: normal;
 }
 
 .timeline-content .date {
   margin: 0;
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.5);
+  color: var(--timeline-date-color);
   display: flex;
   align-items: center;
   gap: 8px; /* Gap for icon */
@@ -105,54 +108,6 @@ body {
 
 .timeline-content .date i {
   margin-right: 0; /* Override existing margin */
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes popIn {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-/* Apply Animations */
-.timeline-item {
-  opacity: 0;
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.timeline-dot {
-  transform: scale(0);
-  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-/* Staggered Delays */
-.timeline-item:nth-child(1),
-.timeline-item:nth-child(1) .timeline-dot {
-  animation-delay: 0.1s;
-}
-
-.timeline-item:nth-child(2),
-.timeline-item:nth-child(2) .timeline-dot {
-  animation-delay: 0.3s;
-}
-
-.timeline-item:nth-child(3),
-.timeline-item:nth-child(3) .timeline-dot {
-  animation-delay: 0.5s;
 }
 
 /* Hover Effects */
@@ -183,7 +138,7 @@ body {
 
   .timeline-dot {
     left: -21px; /* -15px (padding) - 6px (half dot) */
-    top: 16px; /* Align with center of first line (padding 12px + ~half line height) */
+    top: 50%;
   }
 
   /* Smaller typography for mobile */

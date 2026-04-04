@@ -58,10 +58,12 @@ const platforms = [
 
 const navigationMenuItems = [
   {
+    id: "about",
     title: "About",
     url: "/about",
     leftIcon: "far fa-user-circle",
     rightIcon: "fas fa-chevron-right",
+    target: "_self",
   },
 ];
 
@@ -69,6 +71,12 @@ const myDetails = {
   name: "Saurav Sanjay",
   about: "Associate Software Engineer",
   college: "Sant Longowal Institute of Engineering and Technology",
+};
+
+const THEME = {
+  DARK: "dark",
+  LIGHT: "light",
+  STORAGE_KEY: "preferred-theme",
 };
 
 const rootElement = document.getElementById("root");
@@ -108,17 +116,74 @@ function createMenuButton() {
   return button;
 }
 
-function createNavigationItem(item) {
-  const link = document.createElement("a");
-  link.className = "sheet-menu__item";
-  link.href = item.url;
+function getStoredTheme() {
+  const storedTheme = window.localStorage.getItem(THEME.STORAGE_KEY);
+  return storedTheme === THEME.LIGHT ? THEME.LIGHT : THEME.DARK;
+}
 
-  if (item.target) {
-    link.target = item.target;
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  window.localStorage.setItem(THEME.STORAGE_KEY, theme);
+}
+
+function createThemeToggle() {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "theme-toggle";
+  button.setAttribute("aria-label", "Switch to light theme");
+  button.setAttribute("aria-pressed", "false");
+
+  const thumb = document.createElement("span");
+  thumb.className = "theme-toggle__thumb";
+  thumb.appendChild(createIcon("fas fa-moon"));
+
+  button.appendChild(thumb);
+
+  return button;
+}
+
+function updateThemeToggle(toggleButton, theme) {
+  const nextTheme = theme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+  const iconClassName =
+    theme === THEME.DARK ? "fas fa-moon" : "fas fa-sun";
+  const icon = toggleButton.querySelector(".theme-toggle__thumb i");
+
+  toggleButton.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
+  toggleButton.setAttribute("aria-pressed", String(theme === THEME.LIGHT));
+
+  if (icon) {
+    icon.style.opacity = "0";
+    icon.style.transform = "scale(0.72) rotate(-18deg)";
+
+    window.setTimeout(() => {
+      icon.className = iconClassName;
+      icon.setAttribute("aria-hidden", "true");
+      icon.style.opacity = "1";
+      icon.style.transform = "scale(1) rotate(0deg)";
+    }, 110);
   }
+}
 
-  if (item.rel) {
-    link.rel = item.rel;
+function createNavigationItem(item, onSelect) {
+  const element = document.createElement(item.type === "action" ? "button" : "a");
+  element.className = "sheet-menu__item";
+
+  if (item.type === "action") {
+    element.type = "button";
+    element.addEventListener("click", () => {
+      item.onSelect?.();
+      onSelect?.(item);
+    });
+  } else {
+    element.href = item.url;
+
+    if (item.target) {
+      element.target = item.target;
+    }
+
+    if (item.rel) {
+      element.rel = item.rel;
+    }
   }
 
   const leading = document.createElement("span");
@@ -139,9 +204,9 @@ function createNavigationItem(item) {
     trailing.appendChild(createIcon(item.rightIcon));
   }
 
-  link.append(leading, title, trailing);
+  element.append(leading, title, trailing);
 
-  return link;
+  return element;
 }
 
 function createBottomSheetMenu(items) {
@@ -191,7 +256,7 @@ function createBottomSheetMenu(items) {
   sheet.append(dragHandle, header, nav);
   overlay.appendChild(sheet);
 
-  return { overlay, sheet, dragHandle, closeButton };
+  return { overlay, sheet, dragHandle, closeButton, nav };
 }
 
 function createCard(platform) {
@@ -223,6 +288,7 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
     currentOffset: 0,
     pointerId: null,
     suppressHandleClick: false,
+    lastFocusedElement: null,
   };
 
   const closeThreshold = 120;
@@ -254,6 +320,7 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
     }
 
     state.isOpen = true;
+    state.lastFocusedElement = document.activeElement;
     overlay.hidden = false;
     triggerButton.setAttribute("aria-expanded", "true");
     document.body.classList.add("sheet-open");
@@ -261,6 +328,7 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
     requestAnimationFrame(() => {
       overlay.classList.add("sheet-overlay--open");
       overlay.style.opacity = "1";
+      closeButton.focus();
     });
   };
 
@@ -278,6 +346,7 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
     window.setTimeout(() => {
       if (!state.isOpen) {
         overlay.hidden = true;
+        state.lastFocusedElement?.focus?.();
       }
     }, 220);
   };
@@ -342,13 +411,35 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
       closeSheet();
     }
   });
+
+  return { closeSheet };
+}
+
+function mountThemeToggle(toggleButton) {
+  let currentTheme = getStoredTheme();
+
+  const syncTheme = () => {
+    applyTheme(currentTheme);
+    updateThemeToggle(toggleButton, currentTheme);
+  };
+
+  toggleButton.addEventListener("click", () => {
+    currentTheme = currentTheme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
+    syncTheme();
+  });
+
+  syncTheme();
 }
 
 function renderHomePage() {
   const fragment = document.createDocumentFragment();
 
+  const topControls = document.createElement("div");
+  topControls.className = "top-controls";
+
+  const themeToggle = createThemeToggle();
   const menuTrigger = createMenuButton();
-  const { overlay, sheet, dragHandle, closeButton } =
+  const { overlay, sheet, dragHandle, closeButton, nav } =
     createBottomSheetMenu(navigationMenuItems);
 
   const profileContainer = document.createElement("div");
@@ -364,10 +455,26 @@ function renderHomePage() {
     collections.appendChild(cardContainer);
   });
 
-  fragment.append(menuTrigger, overlay, profileContainer, collections);
+  topControls.append(themeToggle, menuTrigger);
+
+  fragment.append(topControls, overlay, profileContainer, collections);
   rootElement.appendChild(fragment);
 
-  mountMenu(menuTrigger, overlay, sheet, dragHandle, closeButton);
+  const { closeSheet } = mountMenu(
+    menuTrigger,
+    overlay,
+    sheet,
+    dragHandle,
+    closeButton,
+  );
+
+  Array.from(nav.querySelectorAll(".sheet-menu__item")).forEach((itemElement) => {
+    itemElement.addEventListener("click", () => {
+      closeSheet();
+    });
+  });
+
+  mountThemeToggle(themeToggle);
 }
 
 renderHomePage();

@@ -1,9 +1,32 @@
 @import url("variables.css");
 
 body {
-  background-image: linear-gradient(to right, #434343 0%, black 100%);
+  background-attachment: fixed;
+  background-image: var(--app-background);
+  color: var(--text-primary);
   margin: var(--horizontal-spacing);
   min-height: calc(100vh - (var(--horizontal-spacing) * 2));
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(127, 183, 255, 0.18),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(45, 127, 249, 0.12),
+      transparent 24%
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
+  pointer-events: none;
+  z-index: -1;
 }
 
 body.sheet-open {
@@ -32,7 +55,7 @@ table {
 }
 
 .nameBackground p {
-  color: var(--white);
+  color: var(--profile-text);
 }
 
 /* Cards */
@@ -46,6 +69,7 @@ table {
   max-width: 400px;
   background: var(--card-background);
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--app-shell-border);
   border-radius: 25px;
   display: flex;
   flex-direction: column;
@@ -64,7 +88,7 @@ table {
   justify-content: center;
   align-items: center;
   font-size: var(--font-size-md);
-  color: var(--black);
+  color: var(--surface-text);
 }
 
 .textEffect p i {
@@ -75,14 +99,14 @@ table {
   text-decoration: none;
   color: var(--white);
   font-size: var(--font-size-md);
-  background: var(--black);
+  background: var(--accent-strong);
   padding: 10px 16px 10px 16px;
   border-radius: 50px;
 }
 
 .textEffect a:hover {
   background: var(--white);
-  color: var(--black);
+  color: var(--accent-strong);
   box-shadow: var(--shadow-md);
 }
 
@@ -97,6 +121,16 @@ abbr {
   font-size: 25px;
   border-radius: 10px;
   padding: 5px;
+}
+
+.top-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 1000;
 }
 
 /* Desktop */
@@ -115,18 +149,14 @@ abbr {
 }
 
 .menu-trigger {
-  position: absolute;
-  top: 20px;
-  right: 20px;
   width: 56px;
   height: 56px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid var(--control-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--control-surface);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   box-shadow: var(--shadow-md);
-  z-index: 1000;
   transition:
     transform 0.2s ease,
     background 0.2s ease,
@@ -139,15 +169,16 @@ abbr {
 
 .menu-trigger:hover {
   transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.24);
+  background: var(--control-surface-hover);
+  border-color: var(--control-border-hover);
 }
 
 .menu-trigger:focus-visible,
+.theme-toggle:focus-visible,
 .sheet__close-button:focus-visible,
 .sheet__drag-handle:focus-visible,
 .sheet-menu__item:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
 }
 
@@ -162,7 +193,59 @@ abbr {
   width: 100%;
   height: 2px;
   border-radius: 999px;
-  background: var(--white);
+  background: var(--text-primary);
+}
+
+.theme-toggle {
+  width: 56px;
+  height: 56px;
+  border: 1px solid var(--control-border);
+  border-radius: 999px;
+  background: var(--control-surface);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+  background: var(--control-surface-hover);
+  border-color: var(--control-border-hover);
+}
+
+.theme-toggle__thumb {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-primary);
+  transition:
+    color 0.22s ease,
+    transform 0.22s ease,
+    opacity 0.22s ease;
+}
+
+:root[data-theme="light"] .theme-toggle__thumb {
+  color: var(--accent-strong);
+}
+
+.theme-toggle__thumb i {
+  font-size: 18px;
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease,
+    color 0.22s ease;
 }
 
 .sheet-overlay {
@@ -195,7 +278,7 @@ abbr {
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   padding: 18px;
-  color: var(--white);
+  color: var(--text-primary);
   transform: translateY(calc(100% + var(--sheet-drag-offset)));
   transition: transform 0.22s ease;
   touch-action: none;
@@ -227,7 +310,7 @@ abbr {
   height: 5px;
   border-radius: 999px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--text-muted);
 }
 
 .sheet__header {
@@ -254,12 +337,12 @@ abbr {
   right: 16px;
   width: 44px;
   height: 44px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--control-border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
+  background: var(--control-surface);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
-  color: var(--white);
+  color: var(--text-primary);
   font-size: 16px;
   cursor: pointer;
   transition:
@@ -269,8 +352,8 @@ abbr {
 }
 
 .sheet__close-button:hover {
-  background: rgba(255, 255, 255, 0.18);
-  border-color: rgba(255, 255, 255, 0.22);
+  background: var(--control-surface-hover);
+  border-color: var(--control-border-hover);
   transform: translateY(-1px);
 }
 
@@ -284,16 +367,18 @@ abbr {
   grid-template-columns: 52px 1fr 32px;
   align-items: center;
   gap: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
   padding: 14px;
   border-radius: 22px;
   text-decoration: none;
-  color: var(--white);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.06) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
+  font: inherit;
+  color: var(--text-primary);
+  background: var(--sheet-item-background);
+  border: 1px solid var(--sheet-item-border);
+  cursor: pointer;
   transition:
     transform 0.18s ease,
     background 0.18s ease,
@@ -302,12 +387,8 @@ abbr {
 
 .sheet-menu__item:hover {
   transform: translateY(-1px);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.16) 0%,
-    rgba(255, 255, 255, 0.08) 100%
-  );
-  border-color: rgba(255, 255, 255, 0.18);
+  background: var(--sheet-item-background-hover);
+  border-color: var(--sheet-item-border-hover);
 }
 
 .sheet-menu__icon {
@@ -322,6 +403,7 @@ abbr {
   border-radius: 18px;
   background: var(--sheet-icon-surface);
   font-size: 20px;
+  color: var(--sheet-icon-color);
 }
 
 .sheet-menu__icon--trailing {
@@ -337,10 +419,19 @@ abbr {
 
 @media (max-width: 600px) {
   .menu-trigger {
-    width: 52px;
-    height: 52px;
-    top: 16px;
-    right: 16px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .top-controls {
+    top: 12px;
+    right: 0px;
+    gap: 8px;
+  }
+
+  .theme-toggle {
+    width: 50px;
+    height: 50px;
   }
 
   .sheet-overlay {

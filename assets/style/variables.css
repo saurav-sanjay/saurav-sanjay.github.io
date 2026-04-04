@@ -2,7 +2,7 @@
   /* App level */
 
   --horizontal-spacing: 16px;
-  --app-background: linear-gradient(to right, #434343 0%, black 100%);
+  --app-background: linear-gradient(to right, #434343 0%, #000000 100%);
   --card-background: linear-gradient(
     to left bottom,
     rgba(255, 255, 255, 0.8),
@@ -20,7 +20,17 @@
 
   --white: #ffffff;
   --black: #000000;
-  --text-muted: rgba(255, 255, 255, 0.74);
+  --text-primary: #f5f8ff;
+  --text-secondary: rgba(245, 248, 255, 0.78);
+  --text-muted: rgba(245, 248, 255, 0.7);
+  --surface-text: #04111f;
+  --profile-text: var(--text-primary);
+  --app-shell-border: rgba(255, 255, 255, 0.08);
+  --control-surface: rgba(255, 255, 255, 0.12);
+  --control-surface-hover: rgba(255, 255, 255, 0.18);
+  --control-border: rgba(255, 255, 255, 0.16);
+  --control-border-hover: rgba(255, 255, 255, 0.24);
+  --focus-ring: rgba(181, 212, 255, 0.92);
   --sheet-backdrop: rgba(12, 12, 12, 0.24);
   --sheet-surface: linear-gradient(
     180deg,
@@ -29,6 +39,24 @@
   );
   --sheet-border: rgba(255, 255, 255, 0.14);
   --sheet-icon-surface: rgba(255, 255, 255, 0.1);
+  --sheet-icon-color: #ffffff;
+  --timeline-title-color: #ffffff;
+  --timeline-subtitle-color: rgba(255, 255, 255, 0.7);
+  --timeline-date-color: rgba(255, 255, 255, 0.5);
+  --sheet-item-background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  --sheet-item-background-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  --sheet-item-border: rgba(255, 255, 255, 0.08);
+  --sheet-item-border-hover: rgba(255, 255, 255, 0.18);
+  --accent: #7fb7ff;
+  --accent-strong: #000000;
 
   --radius-lg: 24px;
   --radius-xl: 32px;
@@ -43,6 +71,55 @@
   --font-size-sm: 16px;
   --font-size-md: 24px;
   --font-size-lg: 36px;
+}
+
+:root[data-theme="light"] {
+  --app-background: linear-gradient(135deg, #f3f8ff 0%, #d8e7ff 42%, #bfd5fb 100%);
+  --card-background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(224, 238, 255, 0.86) 54%,
+    rgba(194, 217, 251, 0.76) 100%
+  );
+  --text-primary: #123151;
+  --text-secondary: rgba(18, 49, 81, 0.78);
+  --text-muted: rgba(18, 49, 81, 0.56);
+  --surface-text: #10253d;
+  --profile-text: #16375b;
+  --app-shell-border: rgba(24, 71, 120, 0.08);
+  --control-surface: rgba(255, 255, 255, 0.72);
+  --control-surface-hover: rgba(255, 255, 255, 0.92);
+  --control-border: rgba(70, 119, 182, 0.2);
+  --control-border-hover: rgba(55, 111, 180, 0.32);
+  --focus-ring: rgba(45, 127, 249, 0.65);
+  --sheet-backdrop: rgba(114, 144, 182, 0.24);
+  --sheet-surface: linear-gradient(
+    180deg,
+    rgba(248, 251, 255, 0.98) 0%,
+    rgba(224, 237, 255, 0.98) 100%
+  );
+  --sheet-border: rgba(74, 123, 188, 0.16);
+  --sheet-icon-surface: rgba(107, 156, 220, 0.14);
+  --sheet-icon-color: #155bbf;
+  --timeline-title-color: #10253d;
+  --timeline-subtitle-color: rgba(18, 49, 81, 0.78);
+  --timeline-date-color: rgba(18, 49, 81, 0.56);
+  --sheet-item-background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.84) 0%,
+    rgba(223, 236, 255, 0.68) 100%
+  );
+  --sheet-item-background-hover: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(214, 231, 255, 0.84) 100%
+  );
+  --sheet-item-border: rgba(96, 142, 205, 0.16);
+  --sheet-item-border-hover: rgba(45, 127, 249, 0.28);
+  --accent: #2d7ff9;
+  --accent-strong: #155bbf;
+  --shadow-md: 0 12px 30px rgba(48, 96, 156, 0.12);
+  --shadow-lg: 0 24px 56px rgba(37, 78, 127, 0.18);
 }
 
 /* Desktop */
