@@ -424,7 +424,7 @@ abbr {
   }
 
   .top-controls {
-    top: 12px;
+    top: 0px;
     right: 0px;
     gap: 8px;
   }

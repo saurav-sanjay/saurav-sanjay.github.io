@@ -4,8 +4,8 @@ const SITE_METADATA = {
   locale: "en_US",
   baseUrl: "https://saurav-sanjay.github.io",
   favicon: "/assets/images/defaultPhoto.jpg",
-  defaultImage: "/assets/images/myPictureDefault.jpg",
-  defaultImageAlt: "Portrait of Saurav Sanjay",
+  defaultImage: "/assets/images/defaultPhoto.jpg",
+  defaultImageAlt: "Default preview image for Saurav Sanjay",
   themeColor: "#1a1a1a",
   keywords: [
     "Saurav Sanjay",
