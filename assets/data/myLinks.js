@@ -271,14 +271,22 @@ function createCard(platform) {
 }
 
 function createProfile() {
-  return `<table>
-    <tr>
-        <td><a href="./socials"><img src="/assets/images/defaultPhoto.jpg" alt="profilePicture" width="175px" height="175px" style="object-fit: cover"></a></td>
-    </tr>
-    <tr>
-        <td><div class="nameBackground"><p class="inout">${myDetails.name}<br/>${myDetails.about}</p></div></td>
-    </tr>
-    </table>`;
+  return `<section class="profile-hero">
+    <div class="profile-banner" aria-hidden="true">
+      <img class="profile-banner__image" src="/assets/images/defaultPhoto.jpg" alt="" />
+      <div class="profile-banner__glow profile-banner__glow--left"></div>
+      <div class="profile-banner__glow profile-banner__glow--right"></div>
+      <div class="profile-banner__mesh"></div>
+    </div>
+    <div class="profile-content">
+      <a class="profile-avatar-link" href="./socials" aria-label="Open social cards">
+        <img src="/assets/images/defaultPhoto.jpg" alt="Profile picture of ${myDetails.name}" width="175px" height="175px" style="object-fit: cover">
+      </a>
+      <div class="nameBackground">
+        <p class="inout">${myDetails.name}<br/>${myDetails.about}</p>
+      </div>
+    </div>
+  </section>`;
 }
 
 function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {

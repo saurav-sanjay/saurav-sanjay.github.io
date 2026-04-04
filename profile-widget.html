@@ -7,26 +7,26 @@
   <body>
     <!-- Fragment loaded by socials/index.html for the profile strip (not a full page). -->
     <div class="profile">
-      <table>
-        <tr>
-          <td>
-            <a href=""
-              ><img
-                src="/assets/images/profile.png"
-                alt="profilePicture"
-                width="175px"
-                height="175px"
-            /></a>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div class="nameBackground">
-              <p class="inout">Saurav Sanjay | Software Engineer</p>
-            </div>
-          </td>
-        </tr>
-      </table>
+      <section class="profile-hero profile-hero--socials">
+        <div class="profile-banner" aria-hidden="true">
+          <img class="profile-banner__image" src="/assets/images/defaultPhoto.jpg" alt="" />
+          <div class="profile-banner__glow profile-banner__glow--left"></div>
+          <div class="profile-banner__glow profile-banner__glow--right"></div>
+          <div class="profile-banner__mesh"></div>
+        </div>
+        <div class="profile-content">
+          <a class="profile-avatar-link" href="/" aria-label="Open profile homepage"
+            ><img
+              src="/assets/images/profile.png"
+              alt="Profile picture of Saurav Sanjay"
+              width="175px"
+              height="175px"
+          /></a>
+          <div class="nameBackground">
+            <p class="inout">Saurav Sanjay | Software Engineer</p>
+          </div>
+        </div>
+      </section>
     </div>
   </body>
 </html>
