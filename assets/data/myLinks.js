@@ -1,3 +1,5 @@
+import { projectsPage } from "./projects.js";
+
 const platforms = [
   {
     name: "projects",
@@ -60,10 +62,16 @@ const navigationMenuItems = [
   {
     id: "about",
     title: "About",
-    url: "/about",
     leftIcon: "far fa-user-circle",
     rightIcon: "fas fa-chevron-right",
-    target: "_self",
+    screenId: "about",
+  },
+  {
+    id: "projects",
+    title: "Projects",
+    leftIcon: "fas fa-tasks",
+    rightIcon: "fas fa-chevron-right",
+    screenId: "projects",
   },
   {
     id: "contact",
@@ -79,6 +87,24 @@ const myDetails = {
   about: "Associate Software Engineer",
   college: "Sant Longowal Institute of Engineering and Technology",
 };
+
+const ABOUT_TIMELINE = [
+  {
+    role: "Associate Software Engineer",
+    company: "Unthinkable Solutions LLP",
+    period: "Jan 2026 - Present",
+  },
+  {
+    role: "Junior Associate Software Engineer",
+    company: "Unthinkable Solutions LLP",
+    period: "July 2024 - Dec 2025",
+  },
+  {
+    role: "Intern",
+    company: "Unthinkable Solutions LLP",
+    period: "Jan 2024 - June 2024",
+  },
+];
 
 const CONTACT_CONFIG = {
   email: "resourcesatresource@gmail.com",
@@ -259,6 +285,66 @@ function createContactSocialLink(platform) {
   return link;
 }
 
+function createProjectScreenCard(project) {
+  const article = document.createElement("article");
+  article.className = "sheet-project-card";
+
+  const titleRow = document.createElement("div");
+  titleRow.className = "sheet-project-card__header";
+
+  const title = document.createElement("h3");
+  title.className = "sheet-project-card__title";
+  title.textContent = project.name;
+
+  const period = document.createElement("p");
+  period.className = "sheet-project-card__period";
+  period.append(
+    createIcon("far fa-calendar-alt"),
+    document.createTextNode(
+      ` ${project.startDate}${project.endDate ? ` - ${project.endDate}` : ""}`,
+    ),
+  );
+
+  titleRow.append(title, period);
+
+  const description = document.createElement("p");
+  description.className = "sheet-project-card__description";
+  description.textContent = project.description;
+
+  const actions = document.createElement("div");
+  actions.className = "sheet-project-card__actions";
+
+  const liveLink = document.createElement("a");
+  liveLink.className = "sheet-project-card__action";
+  liveLink.href = project.liveUrl;
+  liveLink.target = "_blank";
+  liveLink.rel = "noopener noreferrer";
+  liveLink.append(
+    createIcon("fas fa-external-link-alt"),
+    document.createTextNode("Live"),
+  );
+
+  actions.appendChild(liveLink);
+
+  if (project.sourceUrl) {
+    const sourceLink = document.createElement("a");
+    sourceLink.className =
+      "sheet-project-card__action sheet-project-card__action--secondary";
+    sourceLink.href = project.sourceUrl;
+    sourceLink.target = "_blank";
+    sourceLink.rel = "noopener noreferrer";
+    sourceLink.append(
+      createIcon("fas fa-code-branch"),
+      document.createTextNode("Source"),
+    );
+    actions.appendChild(sourceLink);
+  }
+
+  article.append(titleRow, description, actions);
+
+  return article;
+}
+
 function createMainMenuScreen(items, helpers) {
   const nav = document.createElement("nav");
   nav.className = "sheet-menu";
@@ -352,6 +438,116 @@ function createContactScreen({ closeSheet }) {
   return { element: container, initialFocusTarget: textarea };
 }
 
+function createProjectsScreen({ closeSheet }) {
+  const container = document.createElement("div");
+  container.className = "sheet-screen projects-sheet";
+
+  const description = document.createElement("p");
+  description.className = "sheet-screen__description";
+  description.textContent =
+    "A quick view of the current projects. Open any project directly, or jump to the full projects page.";
+
+  const list = document.createElement("div");
+  list.className = "projects-sheet__list";
+  let initialFocusTarget = null;
+
+  projectsPage.projects.forEach((project) => {
+    const card = createProjectScreenCard(project);
+
+    if (!initialFocusTarget) {
+      initialFocusTarget = card.querySelector(".sheet-project-card__action");
+    }
+
+    list.appendChild(card);
+  });
+
+  const footer = document.createElement("div");
+  footer.className = "projects-sheet__footer";
+
+  const allProjectsLink = document.createElement("a");
+  allProjectsLink.className = "projects-sheet__all-link";
+  allProjectsLink.href = "/projects";
+  allProjectsLink.target = "_self";
+  allProjectsLink.append(
+    createIcon("fas fa-arrow-right"),
+    document.createTextNode("Open full projects page"),
+  );
+  allProjectsLink.addEventListener("click", () => {
+    closeSheet();
+  });
+
+  footer.appendChild(allProjectsLink);
+  container.append(description, list, footer);
+
+  return { element: container, initialFocusTarget: initialFocusTarget ?? allProjectsLink };
+}
+
+function createAboutTimelineItem(item) {
+  const entry = document.createElement("article");
+  entry.className = "about-sheet__item";
+
+  const dot = document.createElement("span");
+  dot.className = "about-sheet__dot";
+  dot.setAttribute("aria-hidden", "true");
+
+  const card = document.createElement("div");
+  card.className = "about-sheet__card";
+
+  const role = document.createElement("h3");
+  role.className = "about-sheet__role";
+  role.textContent = item.role;
+
+  const company = document.createElement("p");
+  company.className = "about-sheet__company";
+  company.textContent = item.company;
+
+  const period = document.createElement("p");
+  period.className = "about-sheet__period";
+  period.append(createIcon("far fa-calendar-alt"), document.createTextNode(` ${item.period}`));
+
+  card.append(role, company, period);
+  entry.append(dot, card);
+
+  return entry;
+}
+
+function createAboutScreen() {
+  const container = document.createElement("div");
+  container.className = "sheet-screen about-sheet";
+
+  const description = document.createElement("p");
+  description.className = "sheet-screen__description";
+  description.textContent =
+    "A concise timeline of my recent roles and progression.";
+
+  const timeline = document.createElement("div");
+  timeline.className = "about-sheet__timeline";
+
+  ABOUT_TIMELINE.forEach((item) => {
+    timeline.appendChild(createAboutTimelineItem(item));
+  });
+
+  const footer = document.createElement("div");
+  footer.className = "about-sheet__footer";
+
+  const aboutLink = document.createElement("a");
+  aboutLink.className = "about-sheet__page-link";
+  aboutLink.href = "/about";
+  aboutLink.target = "_self";
+  aboutLink.append(
+    createIcon("fas fa-arrow-right"),
+    document.createTextNode("Open full about page"),
+  );
+
+  footer.appendChild(aboutLink);
+  container.append(description, timeline, footer);
+
+  return {
+    element: container,
+    initialFocusTarget: timeline.querySelector(".about-sheet__card") ?? aboutLink,
+  };
+}
+
 function createBottomSheetMenu({ items, screens, initialScreenId }) {
   const overlay = document.createElement("div");
   overlay.className = "sheet-overlay";
@@ -426,6 +622,7 @@ function createBottomSheetMenu({ items, screens, initialScreenId }) {
     });
 
     content.replaceChildren(element);
+    content.scrollTop = 0;
     state.initialFocusTarget = initialFocusTarget ?? closeButton;
   };
 
@@ -521,6 +718,7 @@ function mountMenu(
     pointerId: null,
     suppressHandleClick: false,
     lastFocusedElement: null,
+    historyEntryActive: false,
   };
 
   const closeThreshold = 120;
@@ -554,6 +752,10 @@ function mountMenu(
     resetScreens?.();
     state.isOpen = true;
     state.lastFocusedElement = document.activeElement;
+    if (!state.historyEntryActive) {
+      window.history.pushState({ sheetOpen: true }, "", window.location.href);
+      state.historyEntryActive = true;
+    }
     overlay.hidden = false;
     triggerButton.setAttribute("aria-expanded", "true");
     document.body.classList.add("sheet-open");
@@ -582,6 +784,11 @@ function mountMenu(
         state.lastFocusedElement?.focus?.();
       }
     }, 220);
+
+    if (state.historyEntryActive) {
+      state.historyEntryActive = false;
+      window.history.back();
+    }
   };
 
   const handlePointerDown = (event) => {
@@ -646,6 +853,36 @@ function mountMenu(
     }
   });
 
+  window.addEventListener("popstate", () => {
+    if (!state.isOpen) {
+      return;
+    }
+
+    if (overlay.classList.contains("sheet-overlay--open")) {
+      if (backButton && !backButton.hidden) {
+        goBack?.();
+        window.history.pushState({ sheetOpen: true }, "", window.location.href);
+        state.historyEntryActive = true;
+        return;
+      }
+
+      state.historyEntryActive = false;
+      state.isOpen = false;
+      overlay.classList.remove("sheet-overlay--open");
+      triggerButton.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("sheet-open");
+      resetDragOffset();
+
+      window.setTimeout(() => {
+        if (!state.isOpen) {
+          overlay.hidden = true;
+          resetScreens?.();
+          state.lastFocusedElement?.focus?.();
+        }
+      }, 220);
+    }
+  });
+
   return { closeSheet };
 }
 
@@ -684,6 +921,14 @@ function renderHomePage() {
     contact: {
       title: "Contact me",
       render: ({ closeSheet }) => createContactScreen({ closeSheet }),
+    },
+    projects: {
+      title: "Projects",
+      render: ({ closeSheet }) => createProjectsScreen({ closeSheet }),
+    },
+    about: {
+      title: "About",
+      render: () => createAboutScreen(),
     },
   };
 
