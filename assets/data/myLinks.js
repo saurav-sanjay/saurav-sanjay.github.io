@@ -65,6 +65,13 @@ const navigationMenuItems = [
     rightIcon: "fas fa-chevron-right",
     target: "_self",
   },
+  {
+    id: "contact",
+    title: "Contact me",
+    leftIcon: "far fa-paper-plane",
+    rightIcon: "fas fa-chevron-right",
+    screenId: "contact",
+  },
 ];
 
 const myDetails = {
@@ -72,6 +79,17 @@ const myDetails = {
   about: "Associate Software Engineer",
   college: "Sant Longowal Institute of Engineering and Technology",
 };
+
+const CONTACT_CONFIG = {
+  email: "resourcesatresource@gmail.com",
+  mailSubject: "Portfolio contact from saurav-sanjay.github.io",
+};
+
+const CONTACT_PLATFORMS = platforms.filter(({ name }) =>
+  ["linkedin", "bluesky", "twitter", "github", "instagram", "youtube"].includes(
+    name,
+  ),
+);
 
 const THEME = {
   DARK: "dark",
@@ -144,8 +162,7 @@ function createThemeToggle() {
 
 function updateThemeToggle(toggleButton, theme) {
   const nextTheme = theme === THEME.DARK ? THEME.LIGHT : THEME.DARK;
-  const iconClassName =
-    theme === THEME.DARK ? "fas fa-moon" : "fas fa-sun";
+  const iconClassName = theme === THEME.DARK ? "fas fa-moon" : "fas fa-sun";
   const icon = toggleButton.querySelector(".theme-toggle__thumb i");
 
   toggleButton.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
@@ -164,15 +181,23 @@ function updateThemeToggle(toggleButton, theme) {
   }
 }
 
-function createNavigationItem(item, onSelect) {
-  const element = document.createElement(item.type === "action" ? "button" : "a");
+function createNavigationItem(item, options = {}) {
+  const { navigateToScreen, onNavigate } = options;
+  const isScreenLink = Boolean(item.screenId);
+  const isAction = item.type === "action" || isScreenLink;
+  const element = document.createElement(isAction ? "button" : "a");
   element.className = "sheet-menu__item";
 
-  if (item.type === "action") {
+  if (isAction) {
     element.type = "button";
     element.addEventListener("click", () => {
+      if (item.screenId) {
+        navigateToScreen?.(item.screenId);
+        return;
+      }
+
       item.onSelect?.();
-      onSelect?.(item);
+      onNavigate?.(item);
     });
   } else {
     element.href = item.url;
@@ -184,6 +209,10 @@ function createNavigationItem(item, onSelect) {
     if (item.rel) {
       element.rel = item.rel;
     }
+
+    element.addEventListener("click", () => {
+      onNavigate?.(item);
+    });
   }
 
   const leading = document.createElement("span");
@@ -209,7 +238,121 @@ function createNavigationItem(item, onSelect) {
   return element;
 }
 
-function createBottomSheetMenu(items) {
+function createContactSocialLink(platform) {
+  const link = document.createElement("a");
+  link.className = "contact-sheet__social-link";
+  link.href = platform.url;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  link.setAttribute("aria-label", `Contact on ${capitalize(platform.name)}`);
+
+  const icon = document.createElement("span");
+  icon.className = "contact-sheet__social-icon";
+  icon.appendChild(createIcon(platform.icon));
+
+  const label = document.createElement("span");
+  label.className = "contact-sheet__social-label";
+  label.textContent = capitalize(platform.name);
+
+  link.append(icon, label);
+
+  return link;
+}
+
+function createMainMenuScreen(items, helpers) {
+  const nav = document.createElement("nav");
+  nav.className = "sheet-menu";
+  nav.setAttribute("aria-label", "Main navigation");
+
+  items.forEach((item) => {
+    nav.appendChild(
+      createNavigationItem(item, {
+        navigateToScreen: helpers.navigateToScreen,
+        onNavigate: helpers.closeSheet,
+      }),
+    );
+  });
+
+  return nav;
+}
+
+function createContactScreen({ closeSheet }) {
+  const container = document.createElement("div");
+  container.className = "sheet-screen contact-sheet";
+
+  const description = document.createElement("p");
+  description.className = "sheet-screen__description";
+  description.textContent =
+    "Drop a note here or reach out on the platforms below. The message button opens your default mail app.";
+
+  const form = document.createElement("form");
+  form.className = "contact-sheet__form";
+
+  const label = document.createElement("label");
+  label.className = "contact-sheet__label";
+  label.htmlFor = "contact-sheet-message";
+  label.textContent = "Message";
+
+  const textarea = document.createElement("textarea");
+  textarea.id = "contact-sheet-message";
+  textarea.className = "contact-sheet__textarea";
+  textarea.name = "message";
+  textarea.rows = 4;
+  textarea.placeholder = "Hi Saurav, I wanted to reach out about...";
+
+  const actions = document.createElement("div");
+  actions.className = "contact-sheet__actions";
+
+  const sendButton = document.createElement("button");
+  sendButton.type = "submit";
+  sendButton.className = "contact-sheet__send";
+  sendButton.append(
+    createIcon("far fa-paper-plane"),
+    document.createTextNode("Send"),
+  );
+
+  actions.appendChild(sendButton);
+  form.append(label, textarea, actions);
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const trimmedMessage = textarea.value.trim();
+
+    if (!trimmedMessage) {
+      textarea.focus();
+      return;
+    }
+
+    const mailToUrl = `mailto:${CONTACT_CONFIG.email || ""}?subject=${encodeURIComponent(
+      CONTACT_CONFIG.mailSubject,
+    )}&body=${encodeURIComponent(trimmedMessage)}`;
+
+    window.location.href = mailToUrl;
+    closeSheet();
+  });
+
+  const socialSection = document.createElement("div");
+  socialSection.className = "contact-sheet__socials";
+
+  const socialHeading = document.createElement("h3");
+  socialHeading.className = "contact-sheet__socials-title";
+  socialHeading.textContent = "Reach me on";
+
+  const socialGrid = document.createElement("div");
+  socialGrid.className = "contact-sheet__social-grid";
+
+  CONTACT_PLATFORMS.forEach((platform) => {
+    socialGrid.appendChild(createContactSocialLink(platform));
+  });
+
+  socialSection.append(socialHeading, socialGrid);
+  container.append(description, form, socialSection);
+
+  return { element: container, initialFocusTarget: textarea };
+}
+
+function createBottomSheetMenu({ items, screens, initialScreenId }) {
   const overlay = document.createElement("div");
   overlay.className = "sheet-overlay";
   overlay.hidden = true;
@@ -232,10 +375,16 @@ function createBottomSheetMenu(items) {
   const header = document.createElement("div");
   header.className = "sheet__header";
 
+  const backButton = document.createElement("button");
+  backButton.type = "button";
+  backButton.className = "sheet__back-button";
+  backButton.setAttribute("aria-label", "Go back");
+  backButton.appendChild(createIcon("fas fa-chevron-left"));
+
   const title = document.createElement("h2");
   title.id = "sheet-title";
   title.className = "sheet__title";
-  title.textContent = "Explore";
+  title.textContent = "";
 
   const closeButton = document.createElement("button");
   closeButton.type = "button";
@@ -243,20 +392,86 @@ function createBottomSheetMenu(items) {
   closeButton.setAttribute("aria-label", "Close navigation menu");
   closeButton.appendChild(createIcon("fas fa-times"));
 
-  header.append(title, closeButton);
+  header.append(backButton, title, closeButton);
 
-  const nav = document.createElement("nav");
-  nav.className = "sheet-menu";
-  nav.setAttribute("aria-label", "Main navigation");
+  const content = document.createElement("div");
+  content.className = "sheet__content";
 
-  items.forEach((item) => {
-    nav.appendChild(createNavigationItem(item));
-  });
-
-  sheet.append(dragHandle, header, nav);
+  sheet.append(dragHandle, header, content);
   overlay.appendChild(sheet);
 
-  return { overlay, sheet, dragHandle, closeButton, nav };
+  const state = {
+    screenStack: [initialScreenId],
+  };
+  const controls = {
+    closeSheet: () => {},
+  };
+
+  const updateScreen = () => {
+    const currentScreen =
+      screens[state.screenStack[state.screenStack.length - 1]];
+
+    if (!currentScreen) {
+      return;
+    }
+
+    title.textContent = currentScreen.title;
+    backButton.hidden = state.screenStack.length === 1;
+
+    const { element, initialFocusTarget } = currentScreen.render({
+      closeSheet: () => controls.closeSheet(),
+      navigateToScreen,
+      goBack,
+      items,
+    });
+
+    content.replaceChildren(element);
+    state.initialFocusTarget = initialFocusTarget ?? closeButton;
+  };
+
+  const navigateToScreen = (screenId) => {
+    if (!screens[screenId]) {
+      return;
+    }
+
+    state.screenStack.push(screenId);
+    updateScreen();
+    window.requestAnimationFrame(() => {
+      state.initialFocusTarget?.focus?.();
+    });
+  };
+
+  const goBack = () => {
+    if (state.screenStack.length === 1) {
+      return;
+    }
+
+    state.screenStack.pop();
+    updateScreen();
+    window.requestAnimationFrame(() => {
+      state.initialFocusTarget?.focus?.();
+    });
+  };
+
+  const resetScreens = () => {
+    state.screenStack = [initialScreenId];
+    updateScreen();
+  };
+
+  updateScreen();
+
+  return {
+    overlay,
+    sheet,
+    dragHandle,
+    closeButton,
+    backButton,
+    resetScreens,
+    bindControls(nextControls) {
+      controls.closeSheet = nextControls.closeSheet;
+    },
+    goBack,
+  };
 }
 
 function createCard(platform) {
@@ -265,8 +480,8 @@ function createCard(platform) {
   return `<div class="textEffect">
         <p><i class="${platform.icon}"></i> ${capitalize(platform.name)}</p>
         <p><a href="${platform.url}" id="${platform.name}Link">${
-    platform.name
-  }/${id}</a></p>
+          platform.name
+        }/${id}</a></p>
         </div>`;
 }
 
@@ -289,7 +504,16 @@ function createProfile() {
   </section>`;
 }
 
-function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
+function mountMenu(
+  triggerButton,
+  overlay,
+  sheet,
+  dragHandle,
+  closeButton,
+  backButton,
+  resetScreens,
+  goBack,
+) {
   const state = {
     isOpen: false,
     startY: 0,
@@ -327,6 +551,7 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
       return;
     }
 
+    resetScreens?.();
     state.isOpen = true;
     state.lastFocusedElement = document.activeElement;
     overlay.hidden = false;
@@ -408,6 +633,7 @@ function mountMenu(triggerButton, overlay, sheet, dragHandle, closeButton) {
       closeSheet();
     }
   });
+  backButton?.addEventListener("click", goBack);
   closeButton.addEventListener("click", closeSheet);
   dragHandle.addEventListener("pointerdown", handlePointerDown);
   dragHandle.addEventListener("pointermove", handlePointerMove);
@@ -445,10 +671,38 @@ function renderHomePage() {
   const topControls = document.createElement("div");
   topControls.className = "top-controls";
 
+  const sheetScreens = {
+    main: {
+      title: "Explore",
+      render: ({ items, navigateToScreen, closeSheet }) => ({
+        element: createMainMenuScreen(items, {
+          navigateToScreen,
+          closeSheet,
+        }),
+      }),
+    },
+    contact: {
+      title: "Contact me",
+      render: ({ closeSheet }) => createContactScreen({ closeSheet }),
+    },
+  };
+
   const themeToggle = createThemeToggle();
   const menuTrigger = createMenuButton();
-  const { overlay, sheet, dragHandle, closeButton, nav } =
-    createBottomSheetMenu(navigationMenuItems);
+  const {
+    overlay,
+    sheet,
+    dragHandle,
+    closeButton,
+    backButton,
+    resetScreens,
+    bindControls,
+    goBack,
+  } = createBottomSheetMenu({
+    items: navigationMenuItems,
+    screens: sheetScreens,
+    initialScreenId: "main",
+  });
 
   const profileContainer = document.createElement("div");
   profileContainer.classList.add("profile");
@@ -474,13 +728,12 @@ function renderHomePage() {
     sheet,
     dragHandle,
     closeButton,
+    backButton,
+    resetScreens,
+    goBack,
   );
 
-  Array.from(nav.querySelectorAll(".sheet-menu__item")).forEach((itemElement) => {
-    itemElement.addEventListener("click", () => {
-      closeSheet();
-    });
-  });
+  bindControls({ closeSheet });
 
   mountThemeToggle(themeToggle);
 }
