@@ -444,20 +444,15 @@ function createProjectsScreen({ closeSheet }) {
 
   const description = document.createElement("p");
   description.className = "sheet-screen__description";
+  description.tabIndex = -1;
   description.textContent =
     "A quick view of the current projects. Open any project directly, or jump to the full projects page.";
 
   const list = document.createElement("div");
   list.className = "projects-sheet__list";
-  let initialFocusTarget = null;
 
   projectsPage.projects.forEach((project) => {
     const card = createProjectScreenCard(project);
-
-    if (!initialFocusTarget) {
-      initialFocusTarget = card.querySelector(".sheet-project-card__action");
-    }
-
     list.appendChild(card);
   });
 
@@ -479,7 +474,7 @@ function createProjectsScreen({ closeSheet }) {
   footer.appendChild(allProjectsLink);
   container.append(description, list, footer);
 
-  return { element: container, initialFocusTarget: initialFocusTarget ?? allProjectsLink };
+  return { element: container, initialFocusTarget: description };
 }
 
 function createAboutTimelineItem(item) {
