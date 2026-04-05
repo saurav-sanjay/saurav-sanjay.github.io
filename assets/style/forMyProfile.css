@@ -1,8 +1,15 @@
 @import url("variables.css");
 
+html {
+  min-height: 100%;
+  background-image: var(--app-background);
+  background-color: #000;
+}
+
 body {
   background-attachment: fixed;
-  background-image: var(--app-background);
+  background-image: none;
+  background-color: transparent;
   color: var(--text-primary);
   margin: 0;
   padding: var(--horizontal-spacing);
@@ -237,7 +244,7 @@ table {
   }
 
   .profile-hero::after {
-    height: 300px;
+    height: 250px;
     background: linear-gradient(
       180deg,
       transparent 0%,
@@ -247,11 +254,11 @@ table {
   }
 
   .profile-hero--socials::after {
-    height: 280px;
+    height: 235px;
   }
 
   .profile-banner {
-    min-height: 180px;
+    min-height: 148px;
   }
 
   .profile-banner__image {
@@ -291,47 +298,150 @@ table {
 /* Redirection Cards */
 .textEffect {
   max-width: 400px;
-  background: var(--card-background);
+  position: relative;
+  background:
+    linear-gradient(180deg, var(--glass-card-highlight), transparent 28%),
+    var(--glass-card-surface);
   box-shadow: var(--shadow-md);
-  border: 1px solid var(--app-shell-border);
+  border: 1px solid var(--glass-card-border);
   border-radius: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-shadow: var(--black);
   font-size: var(--font-size-md);
   padding: var(--spacing-md);
   margin: auto;
   margin-bottom: 2.5%;
   overflow: hidden;
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.textEffect::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.12),
+      transparent 32%
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 38%);
+  pointer-events: none;
+}
+
+.textEffect:hover {
+  transform: translateY(-2px);
+  background:
+    linear-gradient(180deg, var(--glass-card-highlight), transparent 28%),
+    var(--glass-card-surface-hover);
+  border-color: var(--control-border-hover);
+  box-shadow: var(--shadow-lg);
 }
 
 .textEffect p {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: var(--font-size-md);
-  color: var(--surface-text);
+  color: var(--text-primary);
+  margin: 0;
 }
 
-.textEffect p i {
-  margin-right: var(--spacing-xs);
+.textEffect p:first-child {
+  color: var(--text-secondary);
+  font-size: clamp(18px, 2.2vw, 22px);
+  margin-bottom: 10px;
+}
+
+.textEffect__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+  padding: 6px 10px 6px 6px;
+  border-radius: 999px;
+  background: var(--glass-card-badge-surface);
+  border: 1px solid var(--glass-card-badge-border);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.textEffect__badge-icon {
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 28px;
+  margin-right: 0;
+  border-radius: 999px;
+  background: var(--glass-card-icon-surface);
+  border: 1px solid var(--glass-card-icon-border);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  color: var(--text-primary);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.textEffect__badge-icon i {
+  display: block;
+  line-height: 1;
+  font-size: 13px;
+}
+
+.textEffect__badge-label {
+  display: inline-block;
+  line-height: 1.1;
+  font-weight: 700;
+  color: var(--text-secondary);
+  font-size: clamp(15px, 1.8vw, 16px);
 }
 
 .textEffect a {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   text-decoration: none;
-  color: var(--white);
-  font-size: var(--font-size-md);
-  background: var(--accent-strong);
-  padding: 10px 16px 10px 16px;
+  color: var(--glass-card-button-text);
+  font-size: clamp(18px, 2.2vw, 22px);
+  background: var(--glass-card-button);
+  padding: 9px 14px;
   border-radius: 50px;
+  border: 1px solid var(--glass-card-border);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .textEffect a:hover {
-  background: var(--white);
-  color: var(--accent-strong);
+  transform: translateY(-1px);
+  background: var(--glass-card-button-hover);
+  color: var(--glass-card-button-text);
+  border-color: var(--control-border-hover);
   box-shadow: var(--shadow-md);
+}
+
+.textEffect a i {
+  font-size: 13px;
+  line-height: 1;
 }
 
 .inout a,
@@ -512,7 +622,7 @@ abbr {
 .sheet {
   --sheet-drag-offset: 0px;
   width: min(100%, 540px);
-  max-height: calc(100vh - (var(--horizontal-spacing) * 2));
+  max-height: calc(100dvh - (var(--horizontal-spacing) * 2));
   position: relative;
   background: var(--sheet-surface);
   border: 1px solid var(--sheet-border);
@@ -603,7 +713,7 @@ abbr {
 }
 
 .sheet__back-button[hidden] {
-  visibility: hidden;
+  display: none;
 }
 
 .sheet__title {
@@ -1080,19 +1190,26 @@ abbr {
 
   .sheet-overlay {
     align-items: flex-end;
-    padding-top: 12px;
+    padding-top: max(16px, env(safe-area-inset-top));
     padding-right: 12px;
-    padding-bottom: 12px;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
     padding-left: 12px;
   }
 
   .sheet {
-    max-height: calc(100vh - 24px);
+    max-height: calc(
+      100dvh - max(16px, env(safe-area-inset-top)) -
+        max(12px, env(safe-area-inset-bottom)) - 12px
+    );
     border-radius: 28px;
   }
 
   .sheet__header {
     padding-right: 54px;
+  }
+
+  .sheet__content {
+    padding-top: 8px;
   }
 
   .contact-sheet__actions {

@@ -596,6 +596,7 @@ function createBottomSheetMenu({ items, screens, initialScreenId }) {
   };
   const controls = {
     closeSheet: () => {},
+    pushHistory: () => {},
   };
 
   const updateScreen = () => {
@@ -626,6 +627,7 @@ function createBottomSheetMenu({ items, screens, initialScreenId }) {
       return;
     }
 
+    controls.pushHistory?.();
     state.screenStack.push(screenId);
     updateScreen();
     window.requestAnimationFrame(() => {
@@ -661,6 +663,7 @@ function createBottomSheetMenu({ items, screens, initialScreenId }) {
     resetScreens,
     bindControls(nextControls) {
       controls.closeSheet = nextControls.closeSheet;
+      controls.pushHistory = nextControls.pushHistory;
     },
     goBack,
   };
@@ -670,10 +673,13 @@ function createCard(platform) {
   const id = platform.url.split("/").pop() ?? platform.name;
 
   return `<div class="textEffect">
-        <p><i class="${platform.icon}"></i> ${capitalize(platform.name)}</p>
+        <p class="textEffect__badge">
+          <span class="textEffect__badge-icon"><i class="${platform.icon}"></i></span>
+          <span class="textEffect__badge-label">${capitalize(platform.name)}</span>
+        </p>
         <p><a href="${platform.url}" id="${platform.name}Link">${
-          platform.name
-        }/${id}</a></p>
+    platform.name
+  }/${id}<i class="fas fa-external-link-alt"></i></a></p>
         </div>`;
 }
 
@@ -713,7 +719,8 @@ function mountMenu(
     pointerId: null,
     suppressHandleClick: false,
     lastFocusedElement: null,
-    historyEntryActive: false,
+    historyDepth: 0,
+    suppressNextPopState: false,
   };
 
   const closeThreshold = 120;
@@ -739,6 +746,27 @@ function mountMenu(
     }
   };
 
+  const closeSheetUi = () => {
+    state.isOpen = false;
+    overlay.classList.remove("sheet-overlay--open");
+    triggerButton.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("sheet-open");
+    resetDragOffset();
+
+    window.setTimeout(() => {
+      if (!state.isOpen) {
+        overlay.hidden = true;
+        resetScreens?.();
+        state.lastFocusedElement?.focus?.();
+      }
+    }, 220);
+  };
+
+  const pushSheetHistory = () => {
+    window.history.pushState({ sheetOpen: true }, "", window.location.href);
+    state.historyDepth += 1;
+  };
+
   const openSheet = () => {
     if (state.isOpen) {
       return;
@@ -747,9 +775,8 @@ function mountMenu(
     resetScreens?.();
     state.isOpen = true;
     state.lastFocusedElement = document.activeElement;
-    if (!state.historyEntryActive) {
-      window.history.pushState({ sheetOpen: true }, "", window.location.href);
-      state.historyEntryActive = true;
+    if (state.historyDepth === 0) {
+      pushSheetHistory();
     }
     overlay.hidden = false;
     triggerButton.setAttribute("aria-expanded", "true");
@@ -767,22 +794,13 @@ function mountMenu(
       return;
     }
 
-    state.isOpen = false;
-    overlay.classList.remove("sheet-overlay--open");
-    triggerButton.setAttribute("aria-expanded", "false");
-    document.body.classList.remove("sheet-open");
-    resetDragOffset();
+    const historyDepth = state.historyDepth;
+    state.historyDepth = 0;
+    closeSheetUi();
 
-    window.setTimeout(() => {
-      if (!state.isOpen) {
-        overlay.hidden = true;
-        state.lastFocusedElement?.focus?.();
-      }
-    }, 220);
-
-    if (state.historyEntryActive) {
-      state.historyEntryActive = false;
-      window.history.back();
+    if (historyDepth > 0) {
+      state.suppressNextPopState = true;
+      window.history.go(historyDepth * -1);
     }
   };
 
@@ -835,7 +853,17 @@ function mountMenu(
       closeSheet();
     }
   });
-  backButton?.addEventListener("click", goBack);
+  backButton?.addEventListener("click", () => {
+    if (state.historyDepth > 1) {
+      state.suppressNextPopState = true;
+      state.historyDepth -= 1;
+      goBack?.();
+      window.history.back();
+      return;
+    }
+
+    goBack?.();
+  });
   closeButton.addEventListener("click", closeSheet);
   dragHandle.addEventListener("pointerdown", handlePointerDown);
   dragHandle.addEventListener("pointermove", handlePointerMove);
@@ -849,36 +877,26 @@ function mountMenu(
   });
 
   window.addEventListener("popstate", () => {
+    if (state.suppressNextPopState) {
+      state.suppressNextPopState = false;
+      return;
+    }
+
     if (!state.isOpen) {
       return;
     }
 
-    if (overlay.classList.contains("sheet-overlay--open")) {
-      if (backButton && !backButton.hidden) {
-        goBack?.();
-        window.history.pushState({ sheetOpen: true }, "", window.location.href);
-        state.historyEntryActive = true;
-        return;
-      }
-
-      state.historyEntryActive = false;
-      state.isOpen = false;
-      overlay.classList.remove("sheet-overlay--open");
-      triggerButton.setAttribute("aria-expanded", "false");
-      document.body.classList.remove("sheet-open");
-      resetDragOffset();
-
-      window.setTimeout(() => {
-        if (!state.isOpen) {
-          overlay.hidden = true;
-          resetScreens?.();
-          state.lastFocusedElement?.focus?.();
-        }
-      }, 220);
+    if (state.historyDepth > 1) {
+      state.historyDepth -= 1;
+      goBack?.();
+      return;
     }
+
+    state.historyDepth = 0;
+    closeSheetUi();
   });
 
-  return { closeSheet };
+  return { closeSheet, pushHistory: pushSheetHistory };
 }
 
 function mountThemeToggle(toggleButton) {
@@ -962,7 +980,7 @@ function renderHomePage() {
   fragment.append(topControls, overlay, profileContainer, collections);
   rootElement.appendChild(fragment);
 
-  const { closeSheet } = mountMenu(
+  const { closeSheet, pushHistory } = mountMenu(
     menuTrigger,
     overlay,
     sheet,
@@ -973,7 +991,7 @@ function renderHomePage() {
     goBack,
   );
 
-  bindControls({ closeSheet });
+  bindControls({ closeSheet, pushHistory });
 
   mountThemeToggle(themeToggle);
 }
