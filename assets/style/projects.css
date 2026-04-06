@@ -66,10 +66,12 @@
   box-sizing: border-box;
   align-items: center;
   text-align: center;
-  background: var(--card-background);
+  background:
+    linear-gradient(180deg, var(--glass-card-highlight), transparent 28%),
+    var(--glass-card-surface);
   backdrop-filter: blur(14px) saturate(160%);
   -webkit-backdrop-filter: blur(14px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  border: 1px solid var(--glass-card-border);
   box-shadow: var(--shadow-md);
 }
 
@@ -77,8 +79,7 @@
   margin: 0 0 var(--spacing-sm);
   font-size: var(--font-size-lg);
   font-weight: 600;
-  color: var(--white);
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.35);
+  color: var(--text-primary);
   line-height: 1.2;
 }
 
@@ -90,9 +91,8 @@
   margin-right: auto;
   text-align: center;
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--text-secondary);
   line-height: 1.55;
-  text-shadow: var(--black);
 }
 
 /* Container mounted at #profile_projects_list */
@@ -117,7 +117,7 @@
 }
 
 .projects__empty {
-  color: rgba(255, 255, 255, 0.75);
+  color: var(--text-secondary);
   text-align: center;
   font-size: var(--font-size-sm);
 }
@@ -169,7 +169,7 @@
   margin: 0;
   font-size: var(--font-size-md);
   font-weight: 600;
-  color: var(--white);
+  color: var(--text-primary);
   line-height: 1.2;
 }
 
@@ -178,7 +178,7 @@
   justify-content: flex-start;
   align-items: center;
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--text-muted);
   gap: 8px;
 }
 
@@ -191,7 +191,7 @@
   display: block;
   text-align: left;
   font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   line-height: 1.45;
   flex: 1;
 }
@@ -209,19 +209,21 @@
   justify-content: center;
   gap: 8px;
   text-decoration: none;
-  color: var(--white);
+  color: var(--glass-card-button-text);
   font-size: var(--font-size-sm);
-  background: var(--black);
+  background: var(--glass-card-button);
   padding: 10px 16px;
   border-radius: 50px;
-  border: none;
+  border: 1px solid var(--glass-card-border);
   cursor: pointer;
   box-sizing: border-box;
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
 }
 
 .project-card.textEffect a.project-card__btn:hover {
-  background: var(--white);
-  color: var(--black);
+  background: var(--glass-card-button-hover);
+  color: var(--glass-card-button-text);
   box-shadow: var(--shadow-md);
 }
 
@@ -230,12 +232,12 @@
 }
 
 .project-card.textEffect a.project-card__btn--secondary {
-  background: rgba(0, 0, 0, 0.45);
+  background: var(--glass-card-badge-surface);
 }
 
 .project-card.textEffect a.project-card__btn--secondary:hover {
-  background: var(--white);
-  color: var(--black);
+  background: var(--glass-card-button-hover);
+  color: var(--glass-card-button-text);
 }
 
 @media (max-width: 600px) {

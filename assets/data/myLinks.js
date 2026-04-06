@@ -2,11 +2,6 @@ import { projectsPage } from "./projects.js";
 
 const platforms = [
   {
-    name: "projects",
-    url: "/projects",
-    icon: "fas fa-tasks",
-  },
-  {
     name: "twitter",
     url: "https://twitter.com/saurav_sanjay_",
     icon: "fab fa-twitter",
@@ -162,7 +157,16 @@ function createMenuButton() {
 
 function getStoredTheme() {
   const storedTheme = window.localStorage.getItem(THEME.STORAGE_KEY);
-  return storedTheme === THEME.LIGHT ? THEME.LIGHT : THEME.DARK;
+
+  if (storedTheme === THEME.LIGHT || storedTheme === THEME.DARK) {
+    return storedTheme;
+  }
+
+  const prefersLightTheme =
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: light)").matches;
+
+  return prefersLightTheme ? THEME.LIGHT : THEME.DARK;
 }
 
 function applyTheme(theme) {
@@ -677,7 +681,7 @@ function createCard(platform) {
           <span class="textEffect__badge-icon"><i class="${platform.icon}"></i></span>
           <span class="textEffect__badge-label">${capitalize(platform.name)}</span>
         </p>
-        <p><a href="${platform.url}" id="${platform.name}Link">${
+        <p><a href="${platform.url}" id="${platform.name}Link" target="_blank" rel="noopener noreferrer">${
     platform.name
   }/${id}<i class="fas fa-external-link-alt"></i></a></p>
         </div>`;

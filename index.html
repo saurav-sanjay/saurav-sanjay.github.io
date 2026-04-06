@@ -1,33 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html data-page="home">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- PAGE_METADATA:START -->
-    <title>Profile | Saurav Sanjay</title>
-    <meta name="description" content="Personal website of Saurav Sanjay with profile details, links, and featured work." />
+    <title>Saurav Sanjay</title>
+    <meta
+      name="description"
+      content="Personal website of Saurav Sanjay with profile details, links, and featured work."
+    />
     <meta name="author" content="Saurav Sanjay" />
-    <meta name="keywords" content="Saurav Sanjay, portfolio, software engineer, web developer, projects, personal website" />
+    <meta
+      name="keywords"
+      content="Saurav Sanjay, portfolio, software engineer, web developer, projects, personal website"
+    />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#1a1a1a" />
     <link rel="canonical" href="https://saurav-sanjay.github.io/" />
-    <link rel="icon" href="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" type="image/jpeg" />
+    <link
+      rel="icon"
+      href="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg"
+      type="image/jpeg"
+    />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Saurav Sanjay" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Profile | Saurav Sanjay" />
-    <meta property="og:description" content="Personal website of Saurav Sanjay with profile details, links, and featured work." />
+    <meta
+      property="og:description"
+      content="Personal website of Saurav Sanjay with profile details, links, and featured work."
+    />
     <meta property="og:url" content="https://saurav-sanjay.github.io/" />
-    <meta property="og:image" content="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" />
-    <meta property="og:image:alt" content="Default preview image for Saurav Sanjay" />
+    <meta
+      property="og:image"
+      content="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg"
+    />
+    <meta
+      property="og:image:alt"
+      content="Default preview image for Saurav Sanjay"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Profile | Saurav Sanjay" />
-    <meta name="twitter:description" content="Personal website of Saurav Sanjay with profile details, links, and featured work." />
-    <meta name="twitter:image" content="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" />
+    <meta
+      name="twitter:description"
+      content="Personal website of Saurav Sanjay with profile details, links, and featured work."
+    />
+    <meta
+      name="twitter:image"
+      content="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg"
+    />
     <!-- PAGE_METADATA:END -->
     <script>
       const storedTheme = window.localStorage.getItem("preferred-theme");
-      if (storedTheme === "light") {
+      const prefersLightTheme =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: light)").matches;
+      if (storedTheme === "light" || (!storedTheme && prefersLightTheme)) {
         document.documentElement.setAttribute("data-theme", "light");
       }
     </script>
