@@ -22,7 +22,7 @@ const PAGE_METADATA = {
   home: {
     file: "index.html",
     path: "/",
-    title: "Profile",
+    title: "Saurav Sanjay - Software Engineer.",
     description:
       "Personal website of Saurav Sanjay with profile details, links, and featured work.",
   },
@@ -57,7 +57,7 @@ const PAGE_METADATA = {
     path: "/links/",
     title: "Links",
     description: "Legacy links page for Saurav Sanjay.",
-    image: "/links/myPictureDefault.jpg",
+    image: "/assets/images/myPictureDefault.jpg",
     imageAlt: "Legacy links profile preview",
   },
   projectsRedirect: {
@@ -131,7 +131,7 @@ const createResolvedMetadata = (pageKey, overrides = {}) => {
   const description = merged.description;
   const canonical = toAbsoluteUrl(merged.canonicalPath ?? merged.path ?? "/");
   const image = toAbsoluteUrl(
-    merged.twitterImage ?? merged.image ?? SITE_METADATA.defaultImage
+    merged.twitterImage ?? merged.image ?? SITE_METADATA.defaultImage,
   );
   const ogImage = toAbsoluteUrl(merged.image ?? SITE_METADATA.defaultImage);
 
@@ -190,4 +190,9 @@ const renderMetadataTags = (pageKey, overrides = {}) => {
   return tags.join("\n");
 };
 
-export { PAGE_METADATA, SITE_METADATA, createResolvedMetadata, renderMetadataTags };
+export {
+  PAGE_METADATA,
+  SITE_METADATA,
+  createResolvedMetadata,
+  renderMetadataTags,
+};

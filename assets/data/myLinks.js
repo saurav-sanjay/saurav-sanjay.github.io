@@ -1,116 +1,12 @@
 import { projectsPage } from "./projects.js";
-
-const platforms = [
-  {
-    name: "twitter",
-    url: "https://twitter.com/saurav_sanjay_",
-    icon: "fab fa-twitter",
-  },
-  {
-    name: "facebook",
-    url: "https://www.facebook.com/saurav.sanjay.14",
-    icon: "fab fa-facebook",
-  },
-  {
-    name: "instagram",
-    url: "https://www.instagram.com/saurav_sanjay_",
-    icon: "fab fa-instagram",
-  },
-  {
-    name: "linkedin",
-    url: "https://www.linkedin.com/in/sauravsanjay",
-    icon: "fab fa-linkedin",
-  },
-  {
-    name: "bluesky",
-    url: "https://bsky.app/profile/saurav-sanjay.github.io",
-    icon: "fab fa-react",
-  },
-  {
-    name: "youtube",
-    url: "https://www.youtube.com/@saurav-sanjay",
-    icon: "fab fa-youtube",
-  },
-  {
-    name: "github",
-    url: "https://www.github.com/saurav-sanjay",
-    icon: "fab fa-github",
-  },
-  {
-    name: "leetcode",
-    url: "https://www.leetcode.com/saurav-sanjay",
-    icon: "fas fa-code",
-  },
-  {
-    name: "geeksforgeeks",
-    url: "https://auth.geeksforgeeks.org/user/saujay",
-    icon: "fas fa-book",
-  },
-  {
-    name: "codechef",
-    url: "https://www.codechef.com/users/saurav_sanjay",
-    icon: "fas fa-terminal",
-  },
-];
-
-const navigationMenuItems = [
-  {
-    id: "about",
-    title: "About",
-    leftIcon: "far fa-user-circle",
-    rightIcon: "fas fa-chevron-right",
-    screenId: "about",
-  },
-  {
-    id: "projects",
-    title: "Projects",
-    leftIcon: "fas fa-tasks",
-    rightIcon: "fas fa-chevron-right",
-    screenId: "projects",
-  },
-  {
-    id: "contact",
-    title: "Contact me",
-    leftIcon: "far fa-paper-plane",
-    rightIcon: "fas fa-chevron-right",
-    screenId: "contact",
-  },
-];
-
-const myDetails = {
-  name: "Saurav Sanjay",
-  about: "Associate Software Engineer",
-  college: "Sant Longowal Institute of Engineering and Technology",
-};
-
-const ABOUT_TIMELINE = [
-  {
-    role: "Associate Software Engineer",
-    company: "Unthinkable Solutions LLP",
-    period: "Jan 2026 - Present",
-  },
-  {
-    role: "Junior Associate Software Engineer",
-    company: "Unthinkable Solutions LLP",
-    period: "July 2024 - Dec 2025",
-  },
-  {
-    role: "Intern",
-    company: "Unthinkable Solutions LLP",
-    period: "Jan 2024 - June 2024",
-  },
-];
-
-const CONTACT_CONFIG = {
-  email: "resourcesatresource@gmail.com",
-  mailSubject: "Portfolio contact from saurav-sanjay.github.io",
-};
-
-const CONTACT_PLATFORMS = platforms.filter(({ name }) =>
-  ["linkedin", "bluesky", "twitter", "github", "instagram", "youtube"].includes(
-    name,
-  ),
-);
+import {
+  aboutTimeline,
+  contactConfig,
+  contactPlatforms,
+  navigationMenuItems,
+  profileDetails,
+  socialPlatforms,
+} from "./portfolio-data.js";
 
 const THEME = {
   DARK: "dark",
@@ -414,8 +310,8 @@ function createContactScreen({ closeSheet }) {
       return;
     }
 
-    const mailToUrl = `mailto:${CONTACT_CONFIG.email || ""}?subject=${encodeURIComponent(
-      CONTACT_CONFIG.mailSubject,
+    const mailToUrl = `mailto:${contactConfig.email || ""}?subject=${encodeURIComponent(
+      contactConfig.mailSubject,
     )}&body=${encodeURIComponent(trimmedMessage)}`;
 
     window.location.href = mailToUrl;
@@ -432,7 +328,7 @@ function createContactScreen({ closeSheet }) {
   const socialGrid = document.createElement("div");
   socialGrid.className = "contact-sheet__social-grid";
 
-  CONTACT_PLATFORMS.forEach((platform) => {
+  contactPlatforms.forEach((platform) => {
     socialGrid.appendChild(createContactSocialLink(platform));
   });
 
@@ -522,7 +418,7 @@ function createAboutScreen() {
   const timeline = document.createElement("div");
   timeline.className = "about-sheet__timeline";
 
-  ABOUT_TIMELINE.forEach((item) => {
+  aboutTimeline.forEach((item) => {
     timeline.appendChild(createAboutTimelineItem(item));
   });
 
@@ -697,10 +593,10 @@ function createProfile() {
     </div>
     <div class="profile-content">
       <a class="profile-avatar-link" href="./socials" aria-label="Open social cards">
-        <img src="/assets/images/defaultPhoto.jpg" alt="Profile picture of ${myDetails.name}" width="175px" height="175px" style="object-fit: cover">
+        <img src="/assets/images/defaultPhoto.jpg" alt="Profile picture of ${profileDetails.name}" width="175px" height="175px" style="object-fit: cover">
       </a>
       <div class="nameBackground">
-        <p class="inout">${myDetails.name}<br/>${myDetails.about}</p>
+        <p class="inout">${profileDetails.name}<br/>${profileDetails.about}</p>
       </div>
     </div>
   </section>`;
@@ -973,7 +869,7 @@ function renderHomePage() {
   const collections = document.createElement("div");
   collections.classList.add("collections");
 
-  platforms.forEach((platform) => {
+  socialPlatforms.forEach((platform) => {
     const cardContainer = document.createElement("div");
     cardContainer.innerHTML = createCard(platform);
     collections.appendChild(cardContainer);

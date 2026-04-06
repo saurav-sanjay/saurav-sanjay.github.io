@@ -1,43 +1,4 @@
-const platforms = [
-  {
-    name: "twitter",
-    url: "https://twitter.com/saurav_sanjay_",
-  },
-  {
-    name: "facebook",
-    url: "https://www.facebook.com/saurav.sanjay.14",
-  },
-  {
-    name: "instagram",
-    url: "https://www.instagram.com/saurav_sanjay_",
-  },
-  {
-    name: "linkedin",
-    url: "https://www.linkedin.com/in/sauravsanjay",
-  },
-  {
-    name: "youtube",
-    url: "https://www.youtube.com/@saurav-sanjay",
-  },
-  {
-    name: "github",
-    url: "https://www.github.com/saurav-sanjay",
-  },
-  {
-    name: "leetcode",
-    url: "https://www.leetcode.com/saurav-sanjay",
-  },
-  {
-    name: "geeksforgeeks",
-    url: "https://auth.geeksforgeeks.org/user/saujay",
-  },
-];
-
-const myDetails = {
-  name: "Saurav Sanjay",
-  about: "Associate Software Engineer",
-  college: "Sant Longowal Institute of Engineering and Technology",
-};
+import { profileDetails, socialPlatforms } from "../assets/data/portfolio-data.js";
 
 const rootElement = document.getElementById("root");
 
@@ -46,24 +7,24 @@ profileContainer.classList.add("profile");
 profileContainer.innerHTML = createProfile();
 rootElement.appendChild(profileContainer);
 
-platforms.forEach((platform) => {
+socialPlatforms.forEach((platform) => {
   const cardContainer = document.createElement("div");
   cardContainer.innerHTML = createCard(platform);
   rootElement.appendChild(cardContainer.firstChild);
 });
 function createCard(platform) {
   return `<div class="textEffect">
-        <p><i class="fab fa-${platform.name}"></i> ${platform.name}:</p>
-        <p><a href="${platform.url}" id="${platform.name}Link">${platform.name}/SauravSanjay</a></p>
+        <p><i class="${platform.legacyIcon}"></i> ${platform.label}:</p>
+        <p><a href="${platform.url}" id="${platform.name}Link">${platform.handle}</a></p>
         </div>`;
 }
 function createProfile() {
   return `<table>
     <tr>
-        <td><img src="myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></td>
+        <td><img src="/assets/images/myPictureDefault.jpg" alt="profilePicture" width="175px" height="175px"></td>
     </tr>
     <tr>
-        <td><div class="nameBackground"><p class="inout">${myDetails.name}<br/>${myDetails.about}<br/>${myDetails.college}</p></div></td>
+        <td><div class="nameBackground"><p class="inout">${profileDetails.name}<br/>${profileDetails.about}<br/>${profileDetails.college}</p></div></td>
     </tr>
     </table>`;
 }
