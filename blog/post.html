@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en" data-page="blog">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- PAGE_METADATA:START -->
+    <title>Blog | Saurav Sanjay</title>
+    <meta name="description" content="Read the latest thoughts and tutorials from Saurav Sanjay." />
+    <meta name="author" content="Saurav Sanjay" />
+    <meta name="keywords" content="Saurav Sanjay, portfolio, software engineer, web developer, projects, personal website" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1a1a1a" />
+    <link rel="canonical" href="https://saurav-sanjay.github.io/blog/post.html" />
+    <link rel="icon" href="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" type="image/jpeg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Saurav Sanjay" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Blog | Saurav Sanjay" />
+    <meta property="og:description" content="Read the latest thoughts and tutorials from Saurav Sanjay." />
+    <meta property="og:url" content="https://saurav-sanjay.github.io/blog/post.html" />
+    <meta property="og:image" content="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" />
+    <meta property="og:image:alt" content="Default preview image for Saurav Sanjay" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog | Saurav Sanjay" />
+    <meta name="twitter:description" content="Read the latest thoughts and tutorials from Saurav Sanjay." />
+    <meta name="twitter:image" content="https://saurav-sanjay.github.io/assets/images/defaultPhoto.jpg" />
+    <!-- PAGE_METADATA:END -->
+    <script>
+      const storedTheme = window.localStorage.getItem("preferred-theme");
+      const prefersLightTheme =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: light)").matches;
+      if (storedTheme === "light" || (!storedTheme && prefersLightTheme)) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    </script>
+
+    <link rel="stylesheet" href="/assets/style/forMyProfile.css" />
+    <link rel="stylesheet" href="/assets/style/projects.css" />
+    <link rel="stylesheet" href="/assets/style/blog.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+    <style>
+      .reading-progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: transparent;
+        z-index: 1000;
+      }
+      .reading-progress-bar {
+        height: 100%;
+        background: var(--text-primary);
+        width: 0%;
+        transition: width 0.1s ease-out;
+      }
+    </style>
+  </head>
+
+  <body class="projects-page">
+    <div class="reading-progress">
+        <div class="reading-progress-bar" id="progress-bar"></div>
+    </div>
+
+    <main class="projects-page__main">
+      <nav class="breadcrumb">
+        <a href="/"><i class="fas fa-home"></i> Home</a>
+        <span class="separator"><i class="fas fa-chevron-right"></i></span>
+        <a href="/blog"><i class="fas fa-newspaper"></i> Blog</a>
+        <span class="separator"><i class="fas fa-chevron-right"></i></span>
+        <span id="breadcrumb-post-title" class="current">Loading Post...</span>
+      </nav>
+      
+      <article class="post-container">
+        <header class="post-header">
+          <h1 id="post-title" class="post-title">Loading...</h1>
+          <div class="post-meta">
+            <span id="post-date"><i class="far fa-calendar-alt"></i> --</span>
+            <span id="reading-time"><i class="far fa-clock"></i> -- min read</span>
+          </div>
+        </header>
+        
+        <div id="post-content" class="post-content">
+          <div class="loading-shimmer" style="height: 200px; border-radius: 12px; background: var(--glass-card-surface);"></div>
+        </div>
+
+        <div id="author-card-container"></div>
+      </article>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script type="module">
+      import { blogPage } from "/assets/data/blog.js";
+      import { profileDetails, socialPlatforms } from "/assets/data/portfolio-data.js";
+
+      function calculateReadingTime(text) {
+        const wordsPerMinute = 200;
+        const words = text.split(/\s+/).length;
+        return Math.ceil(words / wordsPerMinute);
+      }
+
+      window.addEventListener('scroll', () => {
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        document.getElementById("progress-bar").style.width = scrolled + "%";
+      });
+
+      async function loadPost() {
+        const params = new URLSearchParams(window.location.search);
+        const postSlug = params.get('post');
+        
+        if (!postSlug) {
+          window.location.href = '/blog';
+          return;
+        }
+
+        const post = blogPage.posts.find(p => p.slug === postSlug);
+        if (!post) {
+          document.getElementById('post-content').textContent = 'Post not found.';
+          document.getElementById('breadcrumb-post-title').textContent = 'Post Not Found';
+          return;
+        }
+
+        document.getElementById('post-title').textContent = post.title;
+        document.getElementById('breadcrumb-post-title').textContent = post.title;
+        document.getElementById('post-date').innerHTML = `<i class="far fa-calendar-alt"></i> ${post.date}`;
+
+        try {
+          const response = await fetch(post.url);
+          if (!response.ok) throw new Error('Failed to fetch post');
+          
+          let markdown = await response.text();
+          
+          if (markdown.startsWith('---')) {
+            const endIdx = markdown.indexOf('---', 3);
+            if (endIdx !== -1) {
+              markdown = markdown.substring(endIdx + 3).trim();
+            }
+          }
+
+          document.getElementById('reading-time').innerHTML = `<i class="far fa-clock"></i> ${calculateReadingTime(markdown)} min read`;
+          document.getElementById('post-content').innerHTML = marked.parse(markdown);
+          
+          renderAuthorFooter();
+
+          if (window.Prism) {
+            Prism.highlightAll();
+          }
+          
+          document.querySelectorAll('.textEffect').forEach(el => {
+              el.addEventListener('mousemove', e => {
+                  const rect = el.getBoundingClientRect();
+                  el.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                  el.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+              });
+          });
+        } catch (error) {
+          console.error(error);
+          document.getElementById('post-content').textContent = 'Error loading post content.';
+        }
+      }
+
+      function renderAuthorFooter() {
+        const container = document.getElementById('author-card-container');
+        if (!container) return;
+
+        container.innerHTML = `
+          <div class="author-footer">
+            <img class="author-footer__avatar" src="/assets/images/defaultPhoto.jpg" alt="${profileDetails.name}">
+            <span class="author-footer__name">${profileDetails.name}</span>
+          </div>
+        `;
+      }
+
+      loadPost();
+    </script>
+  </body>
+</html>

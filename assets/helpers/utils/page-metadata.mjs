@@ -43,6 +43,19 @@ const PAGE_METADATA = {
     imageAlt: "Saurav Sanjay projects portfolio preview",
     keywords: ["projects", "portfolio", "frontend", "experiments"],
   },
+  blog: {
+    file: "blog/index.html",
+    path: "/blog/",
+    title: "Blog",
+    description:
+      "Thoughts, tutorials, and announcements from my development journey.",
+  },
+  blogPost: {
+    file: "blog/post.html",
+    path: "/blog/post.html",
+    title: "Blog",
+    description: "Read the latest thoughts and tutorials from Saurav Sanjay.",
+  },
   socials: {
     file: "socials/index.html",
     path: "/socials/",

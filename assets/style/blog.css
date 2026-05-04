@@ -1,0 +1,267 @@
+/* Blog-specific overrides and additions */
+
+/* Post Card Hover Effects */
+.project-card.textEffect {
+    position: relative;
+    z-index: 1;
+}
+
+.project-card.textEffect::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        800px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+        rgba(255, 255, 255, 0.06),
+        transparent 40%
+    );
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.project-card.textEffect:hover::before {
+    opacity: 1;
+}
+
+/* Post Header & Typography */
+.post-header {
+    text-align: left;
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--glass-card-border);
+    margin-bottom: var(--spacing-xl);
+}
+
+.post-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+.post-meta {
+    display: flex;
+    gap: 24px;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+}
+
+.post-meta span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Post Content Layout */
+.post-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+.post-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+.post-content h1, .post-content h2, .post-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.post-content p {
+    margin-bottom: 1.5rem;
+}
+
+.post-content ul, .post-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.5rem;
+}
+
+/* Spacing and Layout Improvements */
+.blog-list-container {
+    margin-top: var(--spacing-md);
+}
+
+#blog_posts_list {
+    margin-top: 0;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: var(--spacing-md) auto var(--spacing-md);
+    padding: 10px 20px;
+    background: var(--glass-card-surface);
+    border: 1px solid var(--glass-card-border);
+    border-radius: 50px;
+    width: fit-content;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.breadcrumb a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+    color: var(--text-primary);
+}
+
+.breadcrumb .separator {
+    color: var(--text-muted);
+    font-size: 0.8em;
+}
+
+.breadcrumb .current {
+    color: var(--text-primary);
+    font-weight: 500;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Enhanced Code Blocks */
+.post-content pre[class*="language-"] {
+    position: relative;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background: var(--glass-card-surface) !important;
+    border: 1px solid var(--glass-card-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    text-shadow: none !important;
+}
+
+.post-content code[class*="language-"] {
+    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    text-shadow: none !important;
+    background: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+.post-content :not(pre) > code {
+    background: var(--glass-card-badge-surface);
+    color: var(--text-primary);
+    padding: 0.2em 0.4em;
+    border-radius: 6px;
+    border: 1px solid var(--glass-card-border);
+    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+}
+
+/* Author Footer - Minimal */
+.author-footer {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md) 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid var(--glass-card-border);
+    margin-bottom: var(--spacing-lg);
+}
+
+.author-footer__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--glass-card-border);
+}
+
+.author-footer__name {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* Prism Token Colors - Overriding for better glass contrast */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.pi {
+	color: var(--text-muted);
+}
+
+.token.punctuation {
+	color: var(--text-secondary);
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #7fb7ff; /* Matching your --accent */
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a5d6ff;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: var(--text-primary);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+	color: #ff7b72;
+}
+
+.token.function,
+.token.class-name {
+	color: #d2a8ff;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+	color: #ffa657;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .post-content {
+        font-size: 1rem;
+    }
+    .post-container {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+}

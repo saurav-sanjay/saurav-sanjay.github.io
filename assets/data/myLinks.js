@@ -1,4 +1,5 @@
 import { projectsPage } from "./projects.js";
+import { blogPage } from "./blog.js";
 import {
   aboutTimeline,
   contactConfig,
@@ -372,6 +373,80 @@ function createProjectsScreen({ closeSheet }) {
   });
 
   footer.appendChild(allProjectsLink);
+  container.append(description, list, footer);
+
+  return { element: container, initialFocusTarget: description };
+}
+
+function createBlogScreen({ closeSheet }) {
+  const container = document.createElement("div");
+  container.className = "sheet-screen projects-sheet"; // Reuse projects-sheet styling
+
+  const description = document.createElement("p");
+  description.className = "sheet-screen__description";
+  description.tabIndex = -1;
+  description.textContent =
+    "Read my latest thoughts and announcements. Jump to the full blog for more.";
+
+  const list = document.createElement("div");
+  list.className = "projects-sheet__list";
+
+  blogPage.posts.slice(0, 3).forEach((post) => {
+    const article = document.createElement("article");
+    article.className = "sheet-project-card";
+
+    const titleRow = document.createElement("div");
+    titleRow.className = "sheet-project-card__header";
+
+    const title = document.createElement("h3");
+    title.className = "sheet-project-card__title";
+    title.textContent = post.title;
+
+    const date = document.createElement("p");
+    date.className = "sheet-project-card__period";
+    date.append(
+      createIcon("far fa-calendar-alt"),
+      document.createTextNode(` ${post.date}`),
+    );
+
+    titleRow.append(title, date);
+
+    const desc = document.createElement("p");
+    desc.className = "sheet-project-card__description";
+    desc.textContent = post.description;
+
+    const actions = document.createElement("div");
+    actions.className = "sheet-project-card__actions";
+
+    const readLink = document.createElement("a");
+    readLink.className = "sheet-project-card__action";
+    readLink.href = post.isExternal ? post.url : `/blog/post.html?post=${post.slug}`;
+    readLink.append(
+      createIcon("fas fa-book-open"),
+      document.createTextNode("Read"),
+    );
+
+    actions.appendChild(readLink);
+    article.append(titleRow, desc, actions);
+    list.appendChild(article);
+  });
+
+  const footer = document.createElement("div");
+  footer.className = "projects-sheet__footer";
+
+  const allBlogLink = document.createElement("a");
+  allBlogLink.className = "projects-sheet__all-link";
+  allBlogLink.href = "/blog";
+  allBlogLink.target = "_self";
+  allBlogLink.append(
+    createIcon("fas fa-arrow-right"),
+    document.createTextNode("Open full blog page"),
+  );
+  allBlogLink.addEventListener("click", () => {
+    closeSheet();
+  });
+
+  footer.appendChild(allBlogLink);
   container.append(description, list, footer);
 
   return { element: container, initialFocusTarget: description };
@@ -838,6 +913,10 @@ function renderHomePage() {
     projects: {
       title: "Projects",
       render: ({ closeSheet }) => createProjectsScreen({ closeSheet }),
+    },
+    blog: {
+      title: "Blog",
+      render: ({ closeSheet }) => createBlogScreen({ closeSheet }),
     },
     about: {
       title: "About",

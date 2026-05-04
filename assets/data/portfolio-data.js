@@ -103,6 +103,13 @@ const navigationMenuItems = [
     screenId: "projects",
   },
   {
+    id: "blog",
+    title: "Blog",
+    leftIcon: "fas fa-newspaper",
+    rightIcon: "fas fa-chevron-right",
+    screenId: "blog",
+  },
+  {
     id: "contact",
     title: "Contact me",
     leftIcon: "far fa-paper-plane",
