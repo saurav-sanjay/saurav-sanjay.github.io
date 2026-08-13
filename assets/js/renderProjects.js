@@ -36,11 +36,12 @@ export function createProjectCard(project) {
 
   const img = document.createElement("img");
   img.className = "project-card__preview";
-  img.src = project.previewImage;
+  const previewSrc = project.previewImage || PREVIEW_FALLBACK;
+  img.src = previewSrc;
   img.alt = `Preview of ${project.name}`;
   img.loading = "lazy";
   img.decoding = "async";
-  img.addEventListener("error", () => onPreviewError(img, project.previewImage));
+  img.addEventListener("error", () => onPreviewError(img, previewSrc));
 
   media.appendChild(img);
 
@@ -76,16 +77,18 @@ export function createProjectCard(project) {
   live.innerHTML =
     '<i class="fas fa-external-link-alt" aria-hidden="true"></i> Live';
 
-  const source = document.createElement("a");
-  source.className = "project-card__btn project-card__btn--secondary";
-  source.href = project.sourceUrl;
-  source.target = "_blank";
-  source.rel = "noopener noreferrer";
-  source.innerHTML =
-    '<i class="fas fa-code-branch" aria-hidden="true"></i> Source';
-
   actions.appendChild(live);
-  actions.appendChild(source);
+
+  if (project.sourceUrl) {
+    const source = document.createElement("a");
+    source.className = "project-card__btn project-card__btn--secondary";
+    source.href = project.sourceUrl;
+    source.target = "_blank";
+    source.rel = "noopener noreferrer";
+    source.innerHTML =
+      '<i class="fas fa-code-branch" aria-hidden="true"></i> Source';
+    actions.appendChild(source);
+  }
 
   body.appendChild(title);
   body.appendChild(period);
