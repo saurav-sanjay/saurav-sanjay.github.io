@@ -7,6 +7,15 @@ export const projectsPage = {
   heroImageAlt: "Projects overview",
   projects: [
     {
+      name: "Connect With Me",
+      description:
+        "A link tree style portfolio builder that lets anyone create a polished personal profile and share their important links from one place.",
+      startDate: "2026",
+      endDate: null,
+      liveUrl: "https://connectwm.netlify.app/dashboard",
+      previewImage: "/assets/images/defaultPhoto.jpg",
+    },
+    {
       name: "Movies Genres",
       description:
         "A small web app to browse and explore movies by genre, built as a hobby project.",
